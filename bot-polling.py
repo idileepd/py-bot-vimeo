@@ -157,30 +157,6 @@ def download_request(file_name, master_json_url, message):
     return
 
 
-
-
-# def upload_video_to_grp(file_name, message):
-#     try:
-#         file_name = file_name+'.mp4'
-#         global grp_Chat_id
-#         global OUTPUT_DIR
-#         file_path = os.path.join(OUTPUT_DIR, file_name)
-#         file_path = '/'.join(file_path.split('\\'))
-#         print(f"File path : {file_path}")
-#         print("Uploading video.. to telegram grp")
-#         bot.reply_to(message, file_name+'\n::Now Uploading to TelegramGroup')
-#         video = open(OUTPUT_DIR, 'rb')
-#         print("Got video reference")
-#         print("Sending vdo")
-#         bot.send_video(grp_Chat_id, video)
-#         bot.send_message(grp_Chat_id, 'Above video name::\n'+file_name)
-#         print(f'Sent video :: {file_name}')
-#         print(f"Deleting file Locally :: {file_name}")
-#         os.remove(file_path)
-#         return [True, file_name+'\n::video sent to grp successfully']
-#     except:
-#         return [False, file_name+'\nFailed to upload video to telegram grp']
-
 # def upload_video_to_grp(file_name, message):
 #     try:
 #         file_name = file_name+'.mp4'
@@ -223,26 +199,13 @@ def upload_video_to_grp(file_name, message):
     os.remove(file_path)
     return [True, file_name+'\n video sent to grp successfully']
 
+
 # POOLING....
-# while True:
-#     try:
-#         bot.polling(none_stop=True)
-#     except Exception:
-#         print("BOT GOT RUNTIME EXCEPTION EXITING...")
-#         exit()
+while True:
+    try:
+        bot.polling(none_stop=True)
+    except Exception:
+        print("BOT GOT RUNTIME EXCEPTION EXITING...")
+        exit()
         
-# SERVER SIDE :: WEBHOOK
 
-
-@server.route('/' + TOKEN, methods=['POST'])
-def getMessage():
-   bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
-   return "!", 200
-
-@server.route("/")
-def webhook():
-   bot.remove_webhook()
-   bot.set_webhook(url=heroku_web_url + TOKEN)
-   return "!", 200
-if __name__ == "__main__":
-   server.run(host="0.0.0.0", port=int(os.environ.get('PORT', 5000)))
