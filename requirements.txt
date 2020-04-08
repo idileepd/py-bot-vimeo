@@ -83,7 +83,7 @@ pynput==1.6.7
 pyOpenSSL==19.1.0
 pyparsing==2.4.6
 pyperclip==1.7.0
-pypiwin32==223
+# pypiwin32==223
 PyRect==0.1.4
 pyrsistent==0.15.7
 PyScreeze==0.1.26
@@ -93,8 +93,8 @@ python-slugify==4.0.0
 PyTweening==1.0.3
 pytz==2019.3
 PyWavelets==1.1.1
-pywin32==227
-pywinpty==0.5.7
+# pywin32==227
+# pywinpty==0.5.7
 pyzmq==18.1.1
 qtconsole==4.6.0
 requests==2.23.0
