@@ -43,6 +43,13 @@ def send_welcome(message):
     print(f"\n\n Start MEssage :: \n{message}\n\n")
     bot.reply_to(message, 'hii welcome!!!')
 
+@bot.message_handler(commands=['shutdown'])  # welcome message handler
+def exit_program(message):
+    print("Exiting program")
+    bot.reply_to(message, 'shut downing...')
+    bot.stop_bot()
+    quit()
+
 @bot.message_handler(commands=['help'])  # help message handler
 def send_help(message):
     bot.reply_to(
