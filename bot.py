@@ -121,15 +121,25 @@ def download_request(file_name, master_json_url, message):
         bot.reply_to(message, download_message)
     return
 
-@server.route('/' + TOKEN, methods=['POST'])
-def getMessage():
-   bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
-   return "!", 200
+# @server.route('/' + TOKEN, methods=['POST'])
+# def getMessage():
+#    bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
+#    return "!", 200
 
-@server.route("/")
-def webhook():
-   bot.remove_webhook()
-   bot.set_webhook(url=heroku_web_url + TOKEN)
-   return "!", 200
-if __name__ == "__main__":
-   server.run(host="0.0.0.0", port=int(os.environ.get('PORT', 5000)))
+# @server.route("/")
+# def webhook():
+#    bot.remove_webhook()
+#    bot.set_webhook(url=heroku_web_url + TOKEN)
+#    return "!", 200
+# if __name__ == "__main__":
+#    server.run(host="0.0.0.0", port=int(os.environ.get('PORT', 5000)))
+
+
+# POOLING....
+while True:
+    try:
+        bot.polling(none_stop=True)
+    except Exception:
+        print("BOT GOT RUNTIME EXCEPTION EXITING...")
+        exit()
+        
