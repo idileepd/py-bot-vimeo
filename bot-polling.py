@@ -8,7 +8,7 @@ from flask import Flask, request
 
 TOKEN = "1148821460:AAGfLhk0rKp5SPzTCwcgWJ2tYQngDBms1H4"
 bot = telebot.TeleBot(token=TOKEN)
-server = Flask(__name__)
+# server = Flask(__name__)
 
 default_dir = '16m8_vJaE--4LludRLZNSVVP86j1XrAkT'
 current_set_dir = '16m8_vJaE--4LludRLZNSVVP86j1XrAkT'
@@ -100,24 +100,37 @@ def current_download_drive_dir(message):
 
 
 
+# @bot.message_handler(commands=['d'])  # help message handler
+# def name_download(message):
+#     try:
+#         # bot.reply_to(message, 'download started...')
+#         fulltext = message.text[3:].split('@')
+#         if((fulltext[1] is None) or ('json' not in fulltext[1])):
+#             return bot.reply_to(message, "vimeo url err")
+#         if(fulltext[0] is None):
+#             return bot.reply_to(message, "filename err")
+
+#         download_request(fulltext[0], fulltext[1], message)
+        
+#     except IndexError:
+#         bot.reply_to(message, "Please check command.")
+#         print(f"\n\n\n\n\n {fulltext} command error of d")
+#     except:
+#         print(f"\n\n\n\n\n {fulltext} command error of d")
+#         bot.reply_to(message, "something went wrong")
+
 @bot.message_handler(commands=['d'])  # help message handler
 def name_download(message):
-    try:
-        # bot.reply_to(message, 'download started...')
-        fulltext = message.text[3:].split('@')
-        if((fulltext[1] is None) or ('json' not in fulltext[1])):
-            return bot.reply_to(message, "vimeo url err")
-        if(fulltext[0] is None):
-            return bot.reply_to(message, "filename err")
+    
+    # bot.reply_to(message, 'download started...')
+    fulltext = message.text[3:].split('@')
+    if((fulltext[1] is None) or ('json' not in fulltext[1])):
+        return bot.reply_to(message, "vimeo url err")
+    if(fulltext[0] is None):
+        return bot.reply_to(message, "filename err")
 
-        download_request(fulltext[0], fulltext[1], message)
-        
-    except IndexError:
-        bot.reply_to(message, "Please check command.")
-        print(f"\n\n\n\n\n {fulltext} command error of d")
-    except:
-        print(f"\n\n\n\n\n {fulltext} command error of d")
-        bot.reply_to(message, "something went wrong")
+    download_request(fulltext[0], fulltext[1], message)
+
 
 
 def download_request(file_name, master_json_url, message):

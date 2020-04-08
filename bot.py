@@ -114,9 +114,9 @@ def name_download(message):
         
     except IndexError:
         bot.reply_to(message, "Please check command.")
-        print(f"\n\n\n\n\n {fulltext} command error of d")
+        print(f"\n\n\n\n\n {fulltext} command error of /d")
     except:
-        print(f"\n\n\n\n\n {fulltext} command error of d")
+        print(f"\n\n\n\n\n {fulltext} Something err in download_request() function.")
         bot.reply_to(message, "something went wrong")
 
 
@@ -148,9 +148,9 @@ def download_request(file_name, master_json_url, message):
         # UPLOAD TO VDOS GRP
         [grp_upload_status, grp_upload_message] = upload_video_to_grp(file_name, message)
         if(grp_upload_status == True):
-            bot.reply_to(message, file_name+'\n::File Downloaded and Uploaded in drive and telegram Successfully')
+            bot.reply_to(message, file_name+'\n'+grp_upload_message+'\n\nFile Downloaded and Uploaded in drive and telegram Successfully')
         else:
-            bot.reply_to(message, grp_upload_message)
+            bot.reply_to(message, file_name+'\nUnable to upload file to telegram group')
 
     else:
         bot.reply_to(message, download_message)
@@ -204,6 +204,26 @@ def download_request(file_name, master_json_url, message):
 #         print(f"\n\n\n\n\n {file_name} <<<<<<< ERROR OCCURED IN UPLOAD VIDEO TO TELEGRAM GRP ")
 #         return [False, file_name+'\n Failed to upload video to telegram grp']
 
+# def upload_video_to_grp(file_name, message):
+#     file_name = file_name+'.mp4'
+#     global grp_Chat_id
+#     global OUTPUT_DIR
+#     file_path = os.path.join(OUTPUT_DIR, file_name)
+#     file_path = '/'.join(file_path.split('\\'))
+#     print(f"File path : {file_path}")
+#     print("Uploading video.. to telegram grp")
+#     bot.reply_to(message, file_name+'\n::Now Uploading to TelegramGroup')
+#     video = open(file_path, 'rb')
+#     print("Got video reference")
+#     print("Sending vdo...")
+#     bot.send_video(grp_Chat_id, video, caption=file_name)
+#     print(f'uploaded  video in telegram grp:: {file_name}')
+#     print(f"Deleting file Locally :: {file_name}")
+#     video.close()
+#     os.remove(file_path)
+#     return [True, file_name+'\n video sent to grp successfully']
+
+
 def upload_video_to_grp(file_name, message):
     file_name = file_name+'.mp4'
     global grp_Chat_id
@@ -221,7 +241,9 @@ def upload_video_to_grp(file_name, message):
     print(f"Deleting file Locally :: {file_name}")
     video.close()
     os.remove(file_path)
-    return [True, file_name+'\n video sent to grp successfully']
+    return [True, file_name+'\n video uploded to group successfully']
+
+
 
 # POOLING....
 # while True:
