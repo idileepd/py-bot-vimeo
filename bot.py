@@ -5,6 +5,8 @@ import sys
 import drive_api as drive
 import vimeo_api as vimeo
 from flask import Flask, request
+import shutil
+
 
 TOKEN = "1148821460:AAGfLhk0rKp5SPzTCwcgWJ2tYQngDBms1H4"
 bot = telebot.TeleBot(token=TOKEN)
@@ -16,8 +18,22 @@ current_set_dir = '16m8_vJaE--4LludRLZNSVVP86j1XrAkT'
 grp_Chat_id = '-478269081'
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 OUTPUT_DIR = os.path.join(BASE_DIR, "output")
+TEMP_DIR = os.path.join(BASE_DIR, "temp")
 
 heroku_web_url = 'https://py-bot-vimeo.herokuapp.com/'
+
+#removing output and temp files
+print("\n\n Removing Output directory and Temp directory")
+if os.path.exists(OUTPUT_DIR) and os.path.isdir(OUTPUT_DIR):
+    print('removing output directory')
+    shutil.rmtree(OUTPUT_DIR)
+
+if os.path.exists(TEMP_DIR) and os.path.isdir(TEMP_DIR):
+    print('removing temp directory')
+    shutil.rmtree(TEMP_DIR)
+
+
+
 
 print("Bot Started :)")
 
