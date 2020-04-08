@@ -58,8 +58,9 @@ def upload_video_to_this_folder(folder_id, file_name):
         file_res = service.files().create(body=file_metadata, media_body=media,).execute() # pylint: disable=maybe-no-member
         print('File ID: %s' % file_res.get('id'))
         print(f"File upload done : {file_name} :: \n {file_res}")
-        # print(f"deleting file : {file_path}")
+        print(f"deleting file : {file_path}")
         media =None # to close connection with file
+        os.remove(file_path)
         return [True, file_res]
     except:
         print(f"\n\n\n\n\n {file_name} <<<<<<< ERROR OCCURED IN UPLOAD VIDEO TO GOOGLE Drive ")
