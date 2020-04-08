@@ -10,18 +10,25 @@ bot = telebot.TeleBot(token=TOKEN)
 
 default_dir = '16m8_vJaE--4LludRLZNSVVP86j1XrAkT'
 current_set_dir = '16m8_vJaE--4LludRLZNSVVP86j1XrAkT'
+grp_Chat_id = '-478269081'
+BASE_DIR = os.path.dirname(os.path.realpath(__file__))
+OUTPUT_DIR = os.path.join(BASE_DIR, "output")
 
 print("Bot Started :)")
 
 
 @bot.message_handler(commands=['start'])  # welcome message handler
 def send_welcome(message):
+    print(f"\n\n Start MEssage :: \n{message}\n\n")
     bot.reply_to(message, 'hii welcome!!!')
 
 @bot.message_handler(commands=['help'])  # help message handler
 def send_help(message):
     bot.reply_to(
         message, '/d - cmd to download vimeo file with name \n Ex: /d fileName@http://vimep..json\n/dd - cmd to direct download file\n\n/help - help cmd')
+
+
+
 
 # @bot.message_handler(commands=['dddd'])  # help message handler
 # def direct_download(message):
@@ -41,19 +48,19 @@ def send_help(message):
 
 
 
-@bot.message_handler(commands=['upload-test-vdo'])
+@bot.message_handler(commands=['upload-test'])
 def upload_test_vdo(message):
-    chat = message.chat
-    chat_id  = getattr(chat, 'id')
-    print("Uploading video..")
-    BASE_DIR = os.path.dirname(os.path.realpath(__file__))
-    OUTPUT_DIR = os.path.join(BASE_DIR, "output\\test.mp4")
-    video = open(OUTPUT_DIR, 'rb')
-    print("Got video reference")
-    bot.send_video(chat_id, video)
-    print("Sending vdo")
+    # chat = message.chat
+    # chat_id  = getattr(chat, 'id')
+    # print("Uploading video..")
+    # BASE_DIR = os.path.dirname(os.path.realpath(__file__))
+    # OUTPUT_DIR = os.path.join(BASE_DIR, "output\\test.mp4")
+    # video = open(OUTPUT_DIR, 'rb')
+    # print("Got video reference")
+    # bot.send_video(chat_id, video)
+    # print("Sending vdo")
+    upload_video_to_grp('newfinaltest', message)
     # bot.send_video(chat_id, "FILEID")
-
 
 
 #/--------------------------------------------------- BOTTTT---------------------------------------
@@ -102,7 +109,9 @@ def name_download(message):
         
     except IndexError:
         bot.reply_to(message, "Please check command.")
+        print(f"\n\n\n\n\n {fulltext} command error of d")
     except:
+        print(f"\n\n\n\n\n {fulltext} command error of d")
         bot.reply_to(message, "something went wrong")
 
 
@@ -115,36 +124,80 @@ def download_request(file_name, master_json_url, message):
     print(f"download status :: {download_status}")
     print(f"download message :: {download_message}")
     if(download_status == True):
-        bot.reply_to(message, file_name+'\n::Download video part over.')
+        bot.reply_to(message, file_name+'\n::Download video part over. \n Now Uploading to GoogleDrive')
         # upload file to telegram for now.
         # upload to drive
         # [upload_status, upload_message]= drive.upload_video_to_my_folder(download_message)
+
+        #UPLOAD TO GDRIVE
         global current_set_dir
         print(f'uploading..  :: {file_name} to folder :: {current_set_dir}')
         [upload_status, upload_message]= drive.upload_video_to_this_folder(current_set_dir,download_message)
         print(f"upload status :: {upload_status}")
         print(f"upload message :: {upload_message}")
         if(upload_status == True):
-            bot.reply_to(message, file_name+'\n::File completely Downloaded and Uploaded Successfully')
+            bot.reply_to(message, file_name+'\n::File Uploaded to drive Successfully')
         else:
             bot.reply_to(message, upload_message)
+
+        # UPLOAD TO VDOS GRP
+        [grp_upload_status, grp_upload_message] = upload_video_to_grp(file_name, message)
+        if(grp_upload_status == True):
+            bot.reply_to(message, file_name+'\n::File Downloaded and Uploaded in drive and telegram Successfully')
+        else:
+            bot.reply_to(message, grp_upload_message)
+
     else:
         bot.reply_to(message, download_message)
+    return
 
 
 
 
+# def upload_video_to_grp(file_name, message):
+#     try:
+#         file_name = file_name+'.mp4'
+#         global grp_Chat_id
+#         global OUTPUT_DIR
+#         file_path = os.path.join(OUTPUT_DIR, file_name)
+#         file_path = '/'.join(file_path.split('\\'))
+#         print(f"File path : {file_path}")
+#         print("Uploading video.. to telegram grp")
+#         bot.reply_to(message, file_name+'\n::Now Uploading to TelegramGroup')
+#         video = open(OUTPUT_DIR, 'rb')
+#         print("Got video reference")
+#         print("Sending vdo")
+#         bot.send_video(grp_Chat_id, video)
+#         bot.send_message(grp_Chat_id, 'Above video name::\n'+file_name)
+#         print(f'Sent video :: {file_name}')
+#         print(f"Deleting file Locally :: {file_name}")
+#         os.remove(file_path)
+#         return [True, file_name+'\n::video sent to grp successfully']
+#     except:
+#         return [False, file_name+'\nFailed to upload video to telegram grp']
 
-
-
-
-
-
-
-
-
-
-
+def upload_video_to_grp(file_name, message):
+    try:
+        file_name = file_name+'.mp4'
+        global grp_Chat_id
+        global OUTPUT_DIR
+        file_path = os.path.join(OUTPUT_DIR, file_name)
+        file_path = '/'.join(file_path.split('\\'))
+        print(f"File path : {file_path}")
+        print("Uploading video.. to telegram grp")
+        bot.reply_to(message, file_name+'\n::Now Uploading to TelegramGroup')
+        video = open(file_path, 'rb')
+        print("Got video reference")
+        print("Sending vdo...")
+        bot.send_video(grp_Chat_id, video, caption=file_name)
+        print(f'uploaded  video in telegram grp:: {file_name}')
+        print(f"Deleting file Locally :: {file_name}")
+        video.close()
+        os.remove(file_path)
+        return [True, file_name+'\n video sent to grp successfully']
+    except:
+        print(f"\n\n\n\n\n {file_name} <<<<<<< ERROR OCCURED IN UPLOAD VIDEO TO TELEGRAM GRP ")
+        return [False, file_name+'\n Failed to upload video to telegram grp']
 
 
 
@@ -153,5 +206,6 @@ while True:
     try:
         bot.polling(none_stop=True)
     except Exception:
+        print("BOT GOT RUNTIME EXCEPTION EXITING...")
         exit()
         

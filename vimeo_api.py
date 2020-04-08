@@ -178,6 +178,7 @@ def vimeo_downloader(args_url, args_output, args_skip_download, args_skip_merge)
         try:
             FFMPEG_BIN = distutils.spawn.find_executable("ffmpeg")
         except AttributeError:
+            print(f"\n\n\n FFMPEG ERROR :( ")
             FFMPEG_BIN = 'ffmpeg'
 
     # ----------------------------------------------------------------------------------------------------------------
