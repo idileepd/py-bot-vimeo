@@ -17,7 +17,7 @@ grp_Chat_id = '-478269081'
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 OUTPUT_DIR = os.path.join(BASE_DIR, "output")
 
-heroku_web_url = 'https://py-bot-vimeo.herokuapp.com/'
+# heroku_web_url = 'https://py-bot-vimeo.herokuapp.com/'
 
 print("Bot Started :)")
 
