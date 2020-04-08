@@ -9,6 +9,7 @@ cachetools==4.0.0
 certifi==2019.11.28
 cffi==1.14.0
 chardet==3.0.4
+click==7.1.1
 colorama==0.4.3
 cryptography==2.9
 cycler==0.10.0
@@ -17,6 +18,7 @@ defusedxml==0.6.0
 entrypoints==0.3
 enum34==1.1.10
 et-xmlfile==1.0.1
+Flask==1.1.2
 google-api-core==1.16.0
 google-api-python-client==1.8.0
 google-auth==1.13.1
@@ -33,6 +35,7 @@ ipython==7.12.0
 ipython-genutils==0.2.0
 ipywidgets==7.5.1
 isort==4.3.21
+itsdangerous==1.1.0
 jdcal==1.4.1
 jedi==0.16.0
 Jinja2==2.11.1
@@ -113,5 +116,6 @@ uritemplate==3.0.1
 urllib3==1.25.8
 wcwidth==0.1.8
 webencodings==0.5.1
+Werkzeug==1.0.1
 widgetsnbextension==3.5.1
 wrapt==1.11.2
