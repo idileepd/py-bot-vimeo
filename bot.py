@@ -40,7 +40,7 @@ print('Bot Started :)')
 @bot.message_handler(commands=['start']) 
 def send_welcome(message):
     print(f"\n\n Start MEssage :: \n{message}\n\n")
-    send_chat_message(message, 'welcome to glat to see you. \n what you will download today')
+    send_chat_message(message, 'welcome to glat to see you. \n what you will download today Bro.')
 
 @bot.message_handler(commands=['shutdown'])  
 def exit_program(message):
@@ -51,7 +51,17 @@ def exit_program(message):
 
 @bot.message_handler(commands=['help'])
 def send_help(message):
-    send_chat_message(message, '/d - cmd to download vimeo file with name \n Ex: /d fileName@http://vimep..json\n/dd - cmd to direct download file\n\n/current_dir - get current google drive directory \n\n/reset_dir - reset google  drive downlaod directory to defult \n\n/change_dir <<dir name>> - change the current directory to your specified directory')
+    msg = 'List of Commands are :\n'
+    msg = msg + '/d - cmd to download vimeo file with name and link seperated by @\n'
+    msg = msg + '   Ex: /d <<you_file_name>>@<<download_url>>\n\n'
+    msg = msg + '/current_dir - get current google drive directory \n'
+    msg = msg + '/reset_dir - reset google  drive downlaod directory to defult \n'
+    msg = msg + '/change_dir - change the current directory to your specified directory'
+    msg = msg + '   Ex: /change_dir <<drive_dir_name>>'
+    msg = msg + '/files - get all downloaded files'
+    msg = msg + '/logs - get logs of specified count'
+    msg = msg + '   Ex: /logs <<count_val>>'
+    send_chat_message(message, msg)
 
 #/--------------------------------------------------- BOTTTT---------------------------------------
 @bot.message_handler(commands=['change_dir']) 
