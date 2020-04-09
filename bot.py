@@ -175,7 +175,15 @@ def get_chat_id(message):
 
 def get_logs(count):
     global logs
-    return logs[-count:]
+    flogs = []
+    if(count<=len(logs)):
+        flogs = logs
+    else:
+        flogs = logs[-count:]
+    message = ''
+    for log in flogs:
+        message = message+'\n'+log
+    return message    
 
 # POOLING....
 while True:
