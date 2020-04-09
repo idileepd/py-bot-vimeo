@@ -51,19 +51,10 @@ def exit_program(message):
 
 @bot.message_handler(commands=['help'])
 def send_help(message):
-    msg = 'List of Commands are :\n'
-    msg = msg + '/d - cmd to download vimeo file with name and link seperated by @\n'
-    msg = msg + '   Ex: /d <<you_file_name>>@<<download_url>>\n\n'
-    msg = msg + '/current_dir - get current google drive directory \n'
-    msg = msg + '/reset_dir - reset google  drive downlaod directory to defult \n'
-    msg = msg + '/change_dir - change the current directory to your specified directory'
-    msg = msg + '   Ex: /change_dir <<drive_dir_name>>'
-    msg = msg + '/files - get all downloaded files'
-    msg = msg + '/logs - get logs of specified count'
-    msg = msg + '   Ex: /logs <<count_val>>'
+    msg = get_help_message()
     send_chat_message(message, msg)
 
-#/--------------------------------------------------- BOTTTT---------------------------------------
+
 @bot.message_handler(commands=['change_dir']) 
 def change_download_drive_dir(message):
     folder_id = message.text[11:]
@@ -91,26 +82,6 @@ def current_download_drive_dir(message):
     print("Current Dir ", current_set_dir)
     send_chat_message(message, '\nCurrent Directory Id:\n'+current_set_dir)
 
-
-@bot.message_handler(commands=['d'])  
-def name_download(message):
-    try:
-        fulltext = message.text[3:].split('@')
-        if((fulltext[1] is None) or ('json' not in fulltext[1])):
-            return bot.reply_to(message, "💥💥💥 vimeo url err")
-        if(fulltext[0] is None):
-            return bot.reply_to(message, "💥💥💥 filename err")
-
-        download_request(fulltext[0], fulltext[1], message)
-
-    except IndexError:
-        send_chat_message(message, '💥💥💥\nFILENAME: '+fulltext[0]+'\nPlease check command.')
-        print(f"\n\n\n\n\n {fulltext} command error of /d")
-    except:
-        print(f"\n\n\n\n\n {fulltext} Something err in download_request() function.")
-        send_chat_message(message, '💥💥💥\nFILENAME: '+fulltext[0]+'\nSomething went wrong')
-
-
 @bot.message_handler(commands=['files'])
 def get_files(message):
     send_chat_message(message, get_downloaded_files_list())
@@ -122,6 +93,25 @@ def get_logs_handler(message):
         send_chat_message(message, 'Logs: \n'+get_logs(int(count)))
     except:
         send_chat_message(message, 'Error occured..')
+
+
+
+@bot.message_handler(commands=['d'])  
+def name_download(message):
+    try:
+        fulltext = message.text[3:].split('@')
+        if((fulltext[1] is None) or ('json' not in fulltext[1])):
+            return bot.reply_to(message, "💥💥💥 vimeo url err")
+        if(fulltext[0] is None):
+            return bot.reply_to(message, "💥💥💥 filename err")
+        download_request(fulltext[0], fulltext[1], message)
+    except IndexError:
+        send_chat_message(message, '💥💥💥\nFILENAME: '+fulltext[0]+'\nPlease check command.')
+        print(f"\n\n\n\n\n {fulltext} command error of /d")
+    except:
+        print(f"\n\n\n\n\n {fulltext} Something err in download_request() function.")
+        send_chat_message(message, '💥💥💥\nFILENAME: '+fulltext[0]+'\nSomething went wrong')
+
 
 
 def download_request(file_name, json_url, message):
@@ -194,6 +184,23 @@ def get_logs(count):
     for log in flogs:
         message = message+'\n'+log
     return message    
+
+
+def get_help_message():
+    msg = 'List of Commands are :\n'
+    msg = msg + '/d - cmd to download vimeo file with name and link seperated by @\n'
+    msg = msg + '   Ex: /d <<you_file_name>>@<<download_url>>\n\n'
+    msg = msg + '/current_dir - get current google drive directory \n'
+    msg = msg + '/reset_dir - reset google  drive downlaod directory to defult \n'
+    msg = msg + '/change_dir - change the current directory to your specified directory\n'
+    msg = msg + '   Ex: /change_dir <<drive_dir_name>>\n\n'
+    msg = msg + '/files - get all downloaded files\n'
+    msg = msg + '/logs - get logs of specified count\n'
+    msg = msg + '   Ex: /logs <<count_val>>\n\n'
+    msg = msg + '/shutdown - shutdown the bot\n'
+    msg = msg + '/help - get help from me'
+
+    return msg
 
 # POOLING....
 while True:
