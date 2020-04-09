@@ -58,7 +58,7 @@ def send_help(message):
     send_chat_message(message, msg)
 
 @bot.message_handler(commands=['cs'])
-def send_help(message):
+def get_cs(message):
     msg = get_subject_info_msg()
     send_chat_message(message, msg)
     
