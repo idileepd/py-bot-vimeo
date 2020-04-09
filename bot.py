@@ -5,7 +5,7 @@ import sys
 import drive_api as drive
 import vimeo_api as vimeo
 import shutil
-
+from slugify import slugify
 
 TOKEN = "1256163582:AAEUbeS_KJ77AXv68zY13beIM03FoG0H7eg"
 # bot = telebot.TeleBot(token=TOKEN)
@@ -111,7 +111,9 @@ def name_download(message):
             return bot.reply_to(message, "💥💥💥 vimeo url err")
         if(fulltext[0] is None):
             return bot.reply_to(message, "💥💥💥 filename err")
+        fulltext[1] = slugify(fulltext[1])
         download_request(fulltext[0], fulltext[1], message)
+    
     except IndexError:
         send_chat_message(message, '💥💥💥\nFILENAME: '+fulltext[0]+'\nPlease check command.')
         print(f"\n\n\n\n\n {fulltext} command error of /d")
