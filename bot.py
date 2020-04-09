@@ -8,8 +8,8 @@ import shutil
 
 
 TOKEN = "1256163582:AAEUbeS_KJ77AXv68zY13beIM03FoG0H7eg"
-bot = telebot.TeleBot(token=TOKEN)
-# bot = telebot.AsyncTeleBot(token=TOKEN)
+# bot = telebot.TeleBot(token=TOKEN)
+bot = telebot.AsyncTeleBot(token=TOKEN)
 
 default_dir = '16m8_vJaE--4LludRLZNSVVP86j1XrAkT'
 current_set_dir = '16m8_vJaE--4LludRLZNSVVP86j1XrAkT'
@@ -188,17 +188,17 @@ def get_logs(count):
 
 def get_help_message():
     msg = 'List of Commands are :\n'
-    msg = msg + '/d - cmd to download vimeo file with name and link seperated by @\n'
-    msg = msg + '   Ex: /d <<you_file_name>>@<<download_url>>\n\n'
-    msg = msg + '/current_dir - get current google drive directory \n'
-    msg = msg + '/reset_dir - reset google  drive downlaod directory to defult \n'
-    msg = msg + '/change_dir - change the current directory to your specified directory\n'
-    msg = msg + '   Ex: /change_dir <<drive_dir_name>>\n\n'
-    msg = msg + '/files - get all downloaded files\n'
-    msg = msg + '/logs - get logs of specified count\n'
-    msg = msg + '   Ex: /logs <<count_val>>\n\n'
-    msg = msg + '/shutdown - shutdown the bot\n'
-    msg = msg + '/help - get help from me'
+    msg = msg + '/d - cmd to download vimeo file with name and link seperated by @\n\n'
+    msg = msg + '   Ex: /d <<you_file_name>>@<<download_url>>\n\n\n'
+    msg = msg + '/current_dir - get current google drive directory \n\n'
+    msg = msg + '/reset_dir - reset google  drive downlaod directory to defult \n\n'
+    msg = msg + '/change_dir - change the current directory to your specified directory\n\n'
+    msg = msg + '   Ex: /change_dir <<drive_dir_name>>\n\n\n'
+    msg = msg + '/files - get all downloaded files\n\n'
+    msg = msg + '/logs - get logs of specified count\n\n'
+    msg = msg + '   Ex: /logs <<count_val>>\n\n\n'
+    msg = msg + '/shutdown - shutdown the bot\n\n'
+    msg = msg + '/help - get help from me\n\n\n'
 
     return msg
 
