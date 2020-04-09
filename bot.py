@@ -187,7 +187,7 @@ def get_logs(count):
 
 
 def get_help_message():
-    msg = 'List of Commands are :\n'
+    msg = 'List of Commands are :\n\n\n'
     msg = msg + '/d - cmd to download vimeo file with name and link seperated by @\n\n'
     msg = msg + '   Ex: /d <<you_file_name>>@<<download_url>>\n\n\n'
     msg = msg + '/current_dir - get current google drive directory \n\n'
