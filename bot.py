@@ -23,6 +23,8 @@ download_completed_files = []
 logs = []
 
 
+
+
 #removing output and temp files
 print("\n\n Removing Output directory and Temp directory")
 if os.path.exists(OUTPUT_DIR) and os.path.isdir(OUTPUT_DIR):
@@ -40,7 +42,7 @@ print('Bot Started :)')
 @bot.message_handler(commands=['start']) 
 def send_welcome(message):
     print(f"\n\n Start MEssage :: \n{message}\n\n")
-    send_chat_message(message, 'welcome to glat to see you. \n what you will download today Bro.')
+    send_chat_message(message, 'welcome to glat to see you. \n what you will download today Bro. \n\n '+ get_help_message())
 
 @bot.message_handler(commands=['shutdown'])  
 def exit_program(message):
@@ -49,12 +51,17 @@ def exit_program(message):
     bot.stop_bot()
     quit()
 
+    
 @bot.message_handler(commands=['help'])
 def send_help(message):
     msg = get_help_message()
     send_chat_message(message, msg)
 
-
+@bot.message_handler(commands=['cs'])
+def send_help(message):
+    msg = get_subject_info_msg()
+    send_chat_message(message, msg)
+    
 @bot.message_handler(commands=['change_dir']) 
 def change_download_drive_dir(message):
     folder_id = message.text[11:]
@@ -187,19 +194,35 @@ def get_logs(count):
 
 
 def get_help_message():
-    msg = 'List of Commands are :\n'
-    msg = msg + '/d - cmd to download vimeo file with name and link seperated by @\n'
-    msg = msg + '   Ex: /d <<you_file_name>>@<<download_url>>\n\n'
-    msg = msg + '/current_dir - get current google drive directory \n'
-    msg = msg + '/reset_dir - reset google  drive downlaod directory to defult \n'
-    msg = msg + '/change_dir - change the current directory to your specified directory\n'
-    msg = msg + '   Ex: /change_dir <<drive_dir_name>>\n\n'
-    msg = msg + '/files - get all downloaded files\n'
-    msg = msg + '/logs - get logs of specified count\n'
-    msg = msg + '   Ex: /logs <<count_val>>\n\n'
-    msg = msg + '/shutdown - shutdown the bot\n'
-    msg = msg + '/help - get help from me'
+    msg = 'List of Commands are :\n\n\n'
+    msg = msg + '/d - cmd to download vimeo file with name and link seperated by @\n\n'
+    msg = msg + '   Ex: /d <<you_file_name>>@<<download_url>>\n\n\n'
+    msg = msg + '/current_dir - get current google drive directory \n\n'
+    msg = msg + '/reset_dir - reset google  drive downlaod directory to defult \n\n'
+    msg = msg + '/change_dir - change the current directory to your specified directory\n\n'
+    msg = msg + '   Ex: /change_dir <<drive_dir_name>>\n\n\n'
+    msg = msg + '/files - get all downloaded files\n\n'
+    msg = msg + '/logs - get logs of specified count\n\n'
+    msg = msg + '   Ex: /logs <<count_val>>\n\n\n'
+    msg = msg + '/cs - gives options to change the cuurent dir to subject dir\n\n'
+    msg = msg + '/shutdown - shutdown the bot\n\n'
+    msg = msg + '/help - get help from me\n\n\n'
 
+    return msg
+
+def get_subject_info_msg():
+    msg = 'Please choose the subject u want to change \n\n\n'
+    msg = msg + 'Default Dir: \n/change_dir 16m8_vJaE--4LludRLZNSVVP86j1XrAkT\n\n'
+    msg = msg + 'Aptitude: \n/change_dir 1mKRR1XtRgopI9qayFC0cO8FtkvYF5bGg\n\n'
+    msg = msg + 'OS: \n/change_dir 1YIwF5w-TjHD-1FHAzewhIgYDkkKh79K7\n\n'
+    msg = msg + 'TOC CD: \n/change_dir 1SA_vM5GQXYlTuD75cu1hlL8Evbu21ktf\n\n'
+    msg = msg + 'DLD: \n/change_dir 1oZ654qYL3YeafDwEarC7ikj1cNjJk58x\n\n'
+    msg = msg + 'DS AL: \n/change_dir 1L8go76soXhIuCm3ibDARxYzGDZN-FOfu\n\n'
+    msg = msg + 'C: \n/change_dir 1fKt-iciguthTdZ8GmiTwlqnfwzn-O2pi\n\n'
+    msg = msg + 'CO: \n/change_dir 1eB9WPjhwEClUdhCgVUXJTSreNhKf9jx5\n\n'
+    msg = msg + 'CN: \n/change_dir 1lL_LKR-NPphZqR04hgpyKZ6RPbcbFjQ9\n\n'
+    msg = msg + 'DBMS: \n/change_dir 1_G3Gm-naxiD7qK8HWRAihH6AcZjUmwzs\n\n'
+    msg = msg + 'ENG VA: \n/change_dir 1Aoh8KpqfdjUOU49QPx4w9h6X68WE3C8w\n\n'
     return msg
 
 # POOLING....
