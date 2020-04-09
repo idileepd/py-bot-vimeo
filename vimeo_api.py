@@ -247,6 +247,7 @@ def vimeo_downloader(args_url, args_output, args_skip_download, args_skip_merge)
 
     return [True, args_output]
 
-# url = 'https://skyfire.vimeocdn.com/1586282754-0x8f2cbaf5731e22377bfe30dfe09eb1d34ce90de5/77624790-b6de-4072-be30-11771c3b10b9/sep/video/4ec93e57,59fecfe0,947d299a,ce419bec,fb2f4f9a/master.json?base64_init=1'
-# fname = 'test'
+# url = 'https://176vod-adaptive.akamaized.net/exp=1586442265~acl=%2F359281775%2F%2A~hmac=4b4c9128d176053686cb6427dc8cf7f1b50cea9c7e61f90099b05e30efbda2c6/359281775/sep/video/1472693452,1472693451,1472680057,1472680054,1472680048/master.json?base64_init=1'
+# fname = 'test1'
 # vimeo_downloader(url, fname, False, False)
+ 
