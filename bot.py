@@ -40,7 +40,7 @@ print('Bot Started :)')
 @bot.message_handler(commands=['start']) 
 def send_welcome(message):
     print(f"\n\n Start MEssage :: \n{message}\n\n")
-    send_chat_message(message, 'welcome to glat to see you. \n what you will download today Bro.')
+    send_chat_message(message, 'welcome to glat to see you. \n what you will download today Bro. \n\n '+ get_help_message())
 
 @bot.message_handler(commands=['shutdown'])  
 def exit_program(message):
