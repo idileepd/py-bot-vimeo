@@ -1,0 +1,16 @@
+asn1crypto
+cffi
+cryptography
+idna
+packaging
+pycparser
+pyOpenSSL
+pyparsing
+requests
+six
+tqdm
+urllib3
+pyTelegramBotAPI==3.6.6
+google-api-python-client
+google-auth-httplib2
+google-auth-oauthlib
