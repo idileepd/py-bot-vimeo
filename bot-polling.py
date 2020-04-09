@@ -4,7 +4,6 @@ import os
 import sys
 import drive_api as drive
 import vimeo_api as vimeo
-from flask import Flask, request
 
 TOKEN = "1148821460:AAGfLhk0rKp5SPzTCwcgWJ2tYQngDBms1H4"
 bot = telebot.TeleBot(token=TOKEN)
