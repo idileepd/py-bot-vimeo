@@ -111,7 +111,7 @@ def name_download(message):
             return bot.reply_to(message, "💥💥💥 vimeo url err")
         if(fulltext[0] is None):
             return bot.reply_to(message, "💥💥💥 filename err")
-        fulltext[0bug] = slugify(fulltext[0])
+        fulltext[0] = slugify(fulltext[0])
         download_request(fulltext[0], fulltext[1], message)
     
     except IndexError:
