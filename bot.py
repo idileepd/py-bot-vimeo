@@ -8,8 +8,8 @@ import shutil
 
 
 TOKEN = "1256163582:AAEUbeS_KJ77AXv68zY13beIM03FoG0H7eg"
-# bot = telebot.TeleBot(token=TOKEN)
-bot = telebot.AsyncTeleBot(token=TOKEN)
+bot = telebot.TeleBot(token=TOKEN)
+# bot = telebot.AsyncTeleBot(token=TOKEN)
 
 default_dir = '16m8_vJaE--4LludRLZNSVVP86j1XrAkT'
 current_set_dir = '16m8_vJaE--4LludRLZNSVVP86j1XrAkT'
