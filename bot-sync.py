@@ -346,7 +346,7 @@ def get_logs(count):
 def isAllowed(message):
     global allowed_grp
     # print(f"MESSAGE GOT:: {message}")
-    # chat_id = get_chat_id(message)
+    chat_id = get_chat_id(message)
     # print("Got chat ID:: "+chat_id)
     if(chat_id == allowed_grp):
         return True
