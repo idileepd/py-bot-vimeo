@@ -28,7 +28,7 @@ download_completed_files = []
 download_failed_files = []
 upload_failed_files = []
 logs = []
-allowed_grp = '-322400391'
+allowed_grp = -322400391
 
 bot_downloding_status = False
 
@@ -345,9 +345,9 @@ def get_logs(count):
 
 def isAllowed(message):
     global allowed_grp
-    print(f"MESSAGE GOT:: {message}")
-    chat_id = get_chat_id(message)
-    print("Got chat ID:: "+chat_id)
+    # print(f"MESSAGE GOT:: {message}")
+    # chat_id = get_chat_id(message)
+    # print("Got chat ID:: "+chat_id)
     if(chat_id == allowed_grp):
         return True
     else:
