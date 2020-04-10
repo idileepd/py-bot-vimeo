@@ -19,7 +19,15 @@ bot = telebot.TeleBot(token=TOKEN)
 default_dir = '16m8_vJaE--4LludRLZNSVVP86j1XrAkT'
 current_set_dir = '16m8_vJaE--4LludRLZNSVVP86j1XrAkT'
 
-grp_Chat_id = '-478269081'
+
+dileep = 760135118
+venu = 642649878
+kamesh = 599072894
+allowed_grp = -1001413818920
+
+allowed_users_grp = [dileep, allowed_grp]
+
+
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 OUTPUT_DIR = os.path.join(BASE_DIR, "output")
 TEMP_DIR = os.path.join(BASE_DIR, "temp")
@@ -46,6 +54,14 @@ if os.path.exists(TEMP_DIR) and os.path.isdir(TEMP_DIR):
     shutil.rmtree(TEMP_DIR)
 
 print('Bot Started :)')
+
+@bot.message_handler(commands=['add']) 
+def add_grp_user_handle(message):
+    if isAllowed(message)!=True:
+        send_chat_message(message, 'You are not Authorized')
+        return
+    print(f"ALLOWING USER ID OR GRP ID:: {message.text.split(' ')[1]}")
+    allow_this_grp_user(int(message.text.split(' ')[1]), message)
 
 
 @bot.message_handler(commands=['start']) 
@@ -83,53 +99,7 @@ def send_help(message):
         send_chat_message(message, msg)
     else:
         send_chat_message(message, '✋✋✋\n 🛑🛑🛑\n wait, \n Bot is Busy')
-
-# @bot.message_handler(commands=['cs'])
-# def get_cs(message):
-#     msg = get_subject_info_msg()
-#     send_chat_message(message, msg)
-    
-# @bot.message_handler(commands=['change_dir']) 
-# def change_download_drive_dir(message):
-#     global bot_downloding_status
-#     if bot_downloding_status == False:
-#         folder_id = message.text[11:]
-#         print(folder_id)
-#         print("ASSUMING Folder exist bro...")
-#         global current_set_dir
-#         current_set_dir = folder_id
-#         print("Current Set Dir ", current_set_dir)
-#         send_chat_message(message, '\nCurrent Directory Id:\n'+current_set_dir)
-#     else:
-#         send_chat_message(message, '✋✋✋\n 🛑🛑🛑\n wait, \n Bot is Busy.')
-    
-
-@bot.message_handler(commands=['reset_dir'])
-def reser_download_drive_dir(message):
-    global bot_downloding_status
-    if bot_downloding_status == False:
-        folder_id = message.text[11:]
-        print(folder_id)
-        global current_set_dir
-        global default_dir
-        current_set_dir = default_dir
-        print("Reset to default directory", current_set_dir)
-        send_chat_message(message, '\nCurrent Directory Id:\n'+current_set_dir)
-    else:
-        send_chat_message(message, '✋✋✋\n 🛑🛑🛑\n wait, \n Bot is Busy.')
-        
-
-@bot.message_handler(commands=['current_dir']) 
-def current_download_drive_dir(message):
-    if isAllowed(message)!=True:
-        send_chat_message(message, 'You are not Authorized')
-        return
-    global bot_downloding_status
-    if bot_downloding_status == False:
-        print("Current Dir ", current_set_dir)
-        send_chat_message(message, '\nCurrent Directory Id:\n'+current_set_dir)
-    else:
-        send_chat_message(message, '✋✋✋\n 🛑🛑🛑\n wait, \n Bot is Busy.')
+ 
 
 @bot.message_handler(commands=['files'])
 def get_files(message):
@@ -202,6 +172,11 @@ def send_welcome_test(message):
         # send_chat_message(message, 'welcome to glat to see you. \n what you will download today Bro. \n\n '+ get_help_message())
         reqs = message.text.split('\n')
         print(reqs[1:])
+        if(reqs[0]!='\\sync'):
+            send_chat_message(message, 'Command Error')
+            return
+        #Clear logs...
+        clear_unwanted_logs()
         download_sync(reqs[1:], message)
     else:
         send_chat_message(message, '✋✋✋\n 🛑🛑🛑\n wait, \n Bot is Busy.')
@@ -236,8 +211,6 @@ def download_sync(reqs, message):
     end_all_at = time.time()
     taken_time = (end_all_at - start_all_at)/60
     send_chat_message(message, 'Total Taken Time :: '+taken_time+' minutes')
-    #Clear logs...
-    clear_unwanted_logs()
     bot_downloding_status = False
 
     
@@ -333,7 +306,7 @@ def get_chat_id(message):
 def get_logs(count):
     global logs
     flogs = []
-    if(count<=len(logs)):
+    if(count>=len(logs)):
         flogs = logs
     else:
         flogs = logs[-count:]
@@ -345,13 +318,28 @@ def get_logs(count):
 
 def isAllowed(message):
     global allowed_grp
-    print(f"MESSAGE GOT:: {message}")
+    print(f"\n\n\n\n:::Checking Authorization :::")
     chat_id = get_chat_id(message)
-    # print("Got chat ID:: "+chat_id)
-    if(chat_id == allowed_grp):
+    print("Got chat ID:: "+str(chat_id))
+    user_id = get_from_user_id(message)
+    print(f"GOT USER ID :: {user_id}")
+    if(chat_id in allowed_users_grp or user_id in allowed_users_grp):
         return True
     else:
         return False
+
+def get_from_user_id(message):
+    from_user = message.from_user
+    # print(f"From User :: {from_user}")
+    user_id = getattr(from_user, "id")
+    return user_id
+
+def allow_this_grp_user(grp_id, message):
+    global allowed_users_grp
+    allowed_users_grp.append(grp_id)
+    send_chat_message(message, str(grp_id)+'\n::Group or user now allowed')
+    print(f"Allowed Users or grps : \n{allowed_users_grp}")
+
 
 def get_help_message():
     msg = 'List of Commands are :\n\n\n'
@@ -369,7 +357,6 @@ def get_help_message():
     msg = msg + '/help - get help from me\n\n\n'
     msg = msg + '/sync - download files synchronously \n\n'
     msg = msg + 'EX: \n/sync - \nfile1@url1\nfile2@url2\n\n\n'
-
     return msg
 
 def get_subject_info_msg():
