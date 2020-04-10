@@ -129,7 +129,7 @@ def name_download(message):
 
 
 
-@bot.message_handler(commands=['/sync']) 
+@bot.message_handler(commands=['sync']) 
 def send_welcome_test(message):
     # print(f"\n\n Start MEssage :: \n{message.text}\n\n")
     # fulltext = message.text[3:].split('*')
