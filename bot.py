@@ -204,9 +204,10 @@ def download_sync(reqs, message):
     start_all_at = time.time() 
     send_chat_message(message, "Dude, Bot Downloading Started you just chill and come later. \n look for happy face ")
     send_chat_message(message, '😊')
+    print(f"\n\n\n\nTOTAL REQUESTS GOT :: {reqs}")
     for req in reqs:
         fulltext = req.split('@')
-        print(fulltext)
+        print(f"\n\n\n DOWNLOADING CURRENT REQUEST :: {fulltext}")
         if((fulltext[1] is None) or ('json' not in fulltext[1])):
             bot.reply_to(message, fulltext[0]+" 💥💥💥 vimeo url err")
             continue
@@ -225,6 +226,7 @@ def download_sync(reqs, message):
     send_chat_message(message, get_upload_failed_files_list())
     end_all_at = time.time()
     taken_time = (end_all_at - start_all_at)/60
+    print('Total Taken Time :: '+str(taken_time)+' minutes')
     send_chat_message(message, 'Total Taken Time :: '+taken_time+' minutes')
 
     
@@ -256,6 +258,7 @@ def download_request(file_name, json_url, message):
         if(upload_status == True):
             end = time.time()
             taken_time = (end - start)/60
+            taken_time = str(taken_time)
             print('🔥🔥🔥 \nFILENAME: '+file_name+'\nUpload Done \nTaken Time :: '+taken_time+' minutes')
             send_chat_message(message, '🔥🔥🔥 \nFILENAME: '+file_name+'\nUpload Done \nTaken Time :: '+taken_time+' minutes')
             download_completed_files.append('✅ >>> '+file_name)
