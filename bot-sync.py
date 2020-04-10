@@ -13,8 +13,8 @@ TOKEN = "1256163582:AAEUbeS_KJ77AXv68zY13beIM03FoG0H7eg"
 # TOKEN = "1200831446:AAHIkHX6aWLhCzCx_U1s_6reylc7R7xgBok"
 
 
-# bot = telebot.TeleBot(token=TOKEN)
-bot = telebot.AsyncTeleBot(token=TOKEN)
+bot = telebot.TeleBot(token=TOKEN)
+# bot = telebot.AsyncTeleBot(token=TOKEN)
 
 default_dir = '16m8_vJaE--4LludRLZNSVVP86j1XrAkT'
 current_set_dir = '16m8_vJaE--4LludRLZNSVVP86j1XrAkT'
@@ -280,14 +280,14 @@ def get_downloaded_files_list():
 def get_download_failed_files_list():
     global download_failed_files
     messgae = 'Downloaded Failed Files are :\n'
-    for filename in download_completed_files:
+    for filename in download_failed_files:
         messgae = messgae+filename+ '\n'
     return messgae
 
 def get_upload_failed_files_list():
     global upload_failed_files
     messgae = 'Upload Failed Files are :\n'
-    for filename in download_completed_files:
+    for filename in upload_failed_files:
         messgae = messgae+filename+ '\n'
     return messgae
 
