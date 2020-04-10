@@ -54,7 +54,7 @@ def send_welcome(message):
         print(f"\n\n Start MEssage :: \n{message}\n\n")
         send_chat_message(message, 'welcome to glat to see you. \n what you will download today Bro. \n\n '+ get_help_message())
     else:
-        send_chat_message(message, 'Please hold bot is downloading...')
+        send_chat_message(message, '✋✋✋\n 🛑🛑🛑\n wait, \n Bot is Busy')
 
 @bot.message_handler(commands=['shutdown'])  
 def exit_program(message):
@@ -72,7 +72,7 @@ def send_help(message):
         msg = get_help_message()
         send_chat_message(message, msg)
     else:
-        send_chat_message(message, 'Please hold bot is downloading...')
+        send_chat_message(message, '✋✋✋\n 🛑🛑🛑\n wait, \n Bot is Busy')
 
 @bot.message_handler(commands=['cs'])
 def get_cs(message):
@@ -91,7 +91,7 @@ def change_download_drive_dir(message):
         print("Current Set Dir ", current_set_dir)
         send_chat_message(message, '\nCurrent Directory Id:\n'+current_set_dir)
     else:
-        send_chat_message(message, 'Please hold bot is downloading....')
+        send_chat_message(message, '✋✋✋\n 🛑🛑🛑\n wait, \n Bot is Busy.')
     
 
 @bot.message_handler(commands=['reset_dir'])
@@ -106,7 +106,7 @@ def reser_download_drive_dir(message):
         print("Reset to default directory", current_set_dir)
         send_chat_message(message, '\nCurrent Directory Id:\n'+current_set_dir)
     else:
-        send_chat_message(message, 'Please hold bot is downloading....')
+        send_chat_message(message, '✋✋✋\n 🛑🛑🛑\n wait, \n Bot is Busy.')
         
 
 @bot.message_handler(commands=['current_dir']) 
@@ -116,7 +116,7 @@ def current_download_drive_dir(message):
         print("Current Dir ", current_set_dir)
         send_chat_message(message, '\nCurrent Directory Id:\n'+current_set_dir)
     else:
-        send_chat_message(message, 'Please hold bot is downloading....')
+        send_chat_message(message, '✋✋✋\n 🛑🛑🛑\n wait, \n Bot is Busy.')
 
 @bot.message_handler(commands=['files'])
 def get_files(message):
@@ -124,7 +124,7 @@ def get_files(message):
     if bot_downloding_status == False:
         send_chat_message(message, get_downloaded_files_list())
     else:
-        send_chat_message(message, 'Please hold bot is downloading....')
+        send_chat_message(message, '✋✋✋\n 🛑🛑🛑\n wait, \n Bot is Busy.')
 
 @bot.message_handler(commands=['logs'])
 def get_logs_handler(message):
@@ -138,7 +138,7 @@ def get_logs_handler(message):
         except:
             send_chat_message(message, 'Error occured..')
     else:
-        send_chat_message(message, 'Please hold bot is downloading....')
+        send_chat_message(message, '✋✋✋\n 🛑🛑🛑\n wait, \n Bot is Busy.')
 
 
 
@@ -147,6 +147,7 @@ def name_download(message):
     global bot_downloding_status
     if bot_downloding_status == False:
         try:
+            bot_downloding_status =True
             fulltext = message.text[3:].split('@')
             if((fulltext[1] is None) or ('json' not in fulltext[1])):
                 return bot.reply_to(message, "💥💥💥 vimeo url err")
@@ -161,8 +162,10 @@ def name_download(message):
         except:
             print(f"\n\n\n\n\n {fulltext} Something err in download_request() function.")
             send_chat_message(message, '💥💥💥\nFILENAME: '+fulltext[0]+'\nSomething went wrong')
+        finally:
+            bot_downloding_status = False
     else:
-        send_chat_message(message, 'Please hold bot is downloading....')
+        send_chat_message(message, '✋✋✋\n 🛑🛑🛑\n wait, \n Bot is Busy.')
 
 
 @bot.message_handler(commands=['sync']) 
@@ -176,7 +179,7 @@ def send_welcome_test(message):
         print(reqs[1:])
         download_sync(reqs[1:], message)
     else:
-        send_chat_message(message, 'Please hold bot is downloading....')
+        send_chat_message(message, '✋✋✋\n 🛑🛑🛑\n wait, \n Bot is Busy.')
 
 
 
