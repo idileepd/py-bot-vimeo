@@ -226,6 +226,7 @@ def download_sync(reqs, message):
     send_chat_message(message, get_upload_failed_files_list())
     end_all_at = time.time()
     taken_time = (end_all_at - start_all_at)/60
+    taken_time = str(taken_time)
     print('Total Taken Time :: '+str(taken_time)+' minutes')
     send_chat_message(message, 'Total Taken Time :: '+taken_time+' minutes')
 
