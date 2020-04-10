@@ -6,7 +6,10 @@ import drive_api as drive
 import vimeo_api as vimeo
 import shutil
 from slugify import slugify
+from flask import Flask, request
 
+server = Flask(__name__)
+# Pybot
 TOKEN = "1256163582:AAEUbeS_KJ77AXv68zY13beIM03FoG0H7eg"
 
 #  TEST BOT TOKEN
@@ -18,7 +21,7 @@ bot = telebot.TeleBot(token=TOKEN)
 
 default_dir = '16m8_vJaE--4LludRLZNSVVP86j1XrAkT'
 current_set_dir = '16m8_vJaE--4LludRLZNSVVP86j1XrAkT'
-
+heroku_web_url = 'https://py-bot-vimeo.herokuapp.com/'
 
 dileep = 760135118
 venu = 642649878
@@ -341,8 +344,10 @@ def isAllowed(message):
     user_id = get_from_user_id(message)
     print(f"GOT USER ID :: {user_id}")
     if(chat_id in allowed_users_grp or user_id in allowed_users_grp):
+        print("Access Granted")
         return True
     else:
+        print("Access Rejected")
         return False
 
 def get_from_user_id(message):
@@ -360,42 +365,27 @@ def allow_this_grp_user(grp_id, message):
 
 def get_help_message():
     msg = 'List of Commands are :\n\n\n'
+    msg = msg + '/help - get help from me\n\n\n'
     msg = msg + '/d - cmd to download vimeo file with name and link seperated by @\n\n'
-    msg = msg + '   Ex: /d <<you_file_name>>@<<download_url>>\n\n\n'
-    msg = msg + '/current_dir - get current google drive directory \n\n'
-    msg = msg + '/reset_dir - reset google  drive downlaod directory to defult \n\n'
-    msg = msg + '/change_dir - change the current directory to your specified directory\n\n'
-    msg = msg + '   Ex: /change_dir <<drive_dir_name>>\n\n\n'
+    msg = msg + 'Ex: /d <<you_file_name>>@<<download_url>>\n\n\n'
     msg = msg + '/files - get all downloaded files\n\n'
     msg = msg + '/logs 5- get logs of specified count\n\n'
     msg = msg + '   Ex: /logs <<count_val>>\n\n\n'
-    msg = msg + '/cs - gives options to change the cuurent dir to subject dir\n\n'
-    msg = msg + '/shutdown - shutdown the bot\n\n'
-    msg = msg + '/help - get help from me\n\n\n'
     msg = msg + '/sync - download files synchronously \n\n'
     msg = msg + 'EX: \n/sync - \nfile1@url1\nfile2@url2\n\n\n'
     return msg
 
-def get_subject_info_msg():
-    msg = 'Please choose the subject u want to change \n\n\n'
-    msg = msg + 'Default Dir: \n/change_dir 16m8_vJaE--4LludRLZNSVVP86j1XrAkT\n\n'
-    msg = msg + 'Aptitude: \n/change_dir 1mKRR1XtRgopI9qayFC0cO8FtkvYF5bGg\n\n'
-    msg = msg + 'OS: \n/change_dir 1YIwF5w-TjHD-1FHAzewhIgYDkkKh79K7\n\n'
-    msg = msg + 'TOC CD: \n/change_dir 1SA_vM5GQXYlTuD75cu1hlL8Evbu21ktf\n\n'
-    msg = msg + 'DLD: \n/change_dir 1oZ654qYL3YeafDwEarC7ikj1cNjJk58x\n\n'
-    msg = msg + 'DS AL: \n/change_dir 1L8go76soXhIuCm3ibDARxYzGDZN-FOfu\n\n'
-    msg = msg + 'C: \n/change_dir 1fKt-iciguthTdZ8GmiTwlqnfwzn-O2pi\n\n'
-    msg = msg + 'CO: \n/change_dir 1eB9WPjhwEClUdhCgVUXJTSreNhKf9jx5\n\n'
-    msg = msg + 'CN: \n/change_dir 1lL_LKR-NPphZqR04hgpyKZ6RPbcbFjQ9\n\n'
-    msg = msg + 'DBMS: \n/change_dir 1_G3Gm-naxiD7qK8HWRAihH6AcZjUmwzs\n\n'
-    msg = msg + 'ENG VA: \n/change_dir 1Aoh8KpqfdjUOU49QPx4w9h6X68WE3C8w\n\n'
-    return msg
 
-# POOLING....
-while True:
-    try:
-        bot.polling(none_stop=True)
-    except Exception:
-        print("BOT GOT RUNTIME EXCEPTION EXITING...")
-        exit()
-        
+@server.route('/' + TOKEN, methods=['POST'])
+def getMessage():
+   bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
+   return "!", 200
+
+@server.route("/")
+def webhook():
+   bot.remove_webhook()
+   bot.set_webhook(url=heroku_web_url + TOKEN)
+   return "!", 200
+if __name__ == "__main__":
+   server.run(host="0.0.0.0", port=int(os.environ.get('PORT', 5000)))
+

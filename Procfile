@@ -1,1 +1,1 @@
-worker: python bot-sync.py
+web: python bot-sync-web.py
