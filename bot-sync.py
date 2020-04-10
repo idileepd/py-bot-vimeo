@@ -99,9 +99,9 @@ def send_help(message):
         send_chat_message(message, msg)
     else:
         send_chat_message(message, '✋✋✋\n 🛑🛑🛑\n wait, \n Bot is Busy')
+        bot.delete_message(get_chat_id(message), message.message_id)
         time.sleep(2)
-        # bot.delete_message(get_chat_id(message), message.message_id)
-        # bot.delete_message(get_chat_id(message), message.message_id-1)
+        bot.delete_message(get_chat_id(message), message.message_id+1)
 
  
 
@@ -115,6 +115,9 @@ def get_files(message):
         send_chat_message(message, get_downloaded_files_list())
     else:
         send_chat_message(message, '✋✋✋\n 🛑🛑🛑\n wait, \n Bot is Busy.')
+        bot.delete_message(get_chat_id(message), message.message_id)
+        time.sleep(2)
+        bot.delete_message(get_chat_id(message), message.message_id+1)
 
 @bot.message_handler(commands=['logs'])
 def get_logs_handler(message):
@@ -132,6 +135,9 @@ def get_logs_handler(message):
             send_chat_message(message, 'Error occured..')
     else:
         send_chat_message(message, '✋✋✋\n 🛑🛑🛑\n wait, \n Bot is Busy.')
+        bot.delete_message(get_chat_id(message), message.message_id)
+        time.sleep(2)
+        bot.delete_message(get_chat_id(message), message.message_id+1)
 
 
 
@@ -162,6 +168,9 @@ def name_download(message):
             bot_downloding_status = False
     else:
         send_chat_message(message, '✋✋✋\n 🛑🛑🛑\n wait, \n Bot is Busy.')
+        bot.delete_message(get_chat_id(message), message.message_id)
+        time.sleep(2)
+        bot.delete_message(get_chat_id(message), message.message_id+1)
 
 
 @bot.message_handler(commands=['sync']) 
@@ -184,6 +193,9 @@ def send_welcome_test(message):
         download_sync(reqs[1:], message)
     else:
         send_chat_message(message, '✋✋✋\n 🛑🛑🛑\n wait, \n Bot is Busy.')
+        bot.delete_message(get_chat_id(message), message.message_id)
+        time.sleep(2)
+        bot.delete_message(get_chat_id(message), message.message_id+1)
 
 
 
