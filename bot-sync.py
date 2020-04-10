@@ -345,7 +345,9 @@ def get_logs(count):
 
 def isAllowed(message):
     global allowed_grp
+    print(f"MESSAGE GOT:: {message}")
     chat_id = get_chat_id(message)
+    print("Got chat ID:: "+chat_id)
     if(chat_id == allowed_grp):
         return True
     else:
@@ -360,7 +362,7 @@ def get_help_message():
     msg = msg + '/change_dir - change the current directory to your specified directory\n\n'
     msg = msg + '   Ex: /change_dir <<drive_dir_name>>\n\n\n'
     msg = msg + '/files - get all downloaded files\n\n'
-    msg = msg + '/logs - get logs of specified count\n\n'
+    msg = msg + '/logs 5- get logs of specified count\n\n'
     msg = msg + '   Ex: /logs <<count_val>>\n\n\n'
     msg = msg + '/cs - gives options to change the cuurent dir to subject dir\n\n'
     msg = msg + '/shutdown - shutdown the bot\n\n'
