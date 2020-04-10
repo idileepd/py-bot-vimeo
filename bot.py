@@ -5,7 +5,7 @@ import sys
 import drive_api as drive
 import vimeo_api as vimeo
 import shutil
-
+from slugify import slugify
 
 TOKEN = "1256163582:AAEUbeS_KJ77AXv68zY13beIM03FoG0H7eg"
 # bot = telebot.TeleBot(token=TOKEN)
@@ -21,6 +21,8 @@ TEMP_DIR = os.path.join(BASE_DIR, "temp")
 
 download_completed_files = []
 logs = []
+
+
 
 
 #removing output and temp files
@@ -49,12 +51,17 @@ def exit_program(message):
     bot.stop_bot()
     quit()
 
+    
 @bot.message_handler(commands=['help'])
 def send_help(message):
     msg = get_help_message()
     send_chat_message(message, msg)
 
-
+@bot.message_handler(commands=['cs'])
+def get_cs(message):
+    msg = get_subject_info_msg()
+    send_chat_message(message, msg)
+    
 @bot.message_handler(commands=['change_dir']) 
 def change_download_drive_dir(message):
     folder_id = message.text[11:]
@@ -104,7 +111,9 @@ def name_download(message):
             return bot.reply_to(message, "💥💥💥 vimeo url err")
         if(fulltext[0] is None):
             return bot.reply_to(message, "💥💥💥 filename err")
+        fulltext[0] = slugify(fulltext[0])
         download_request(fulltext[0], fulltext[1], message)
+    
     except IndexError:
         send_chat_message(message, '💥💥💥\nFILENAME: '+fulltext[0]+'\nPlease check command.')
         print(f"\n\n\n\n\n {fulltext} command error of /d")
@@ -197,9 +206,25 @@ def get_help_message():
     msg = msg + '/files - get all downloaded files\n\n'
     msg = msg + '/logs - get logs of specified count\n\n'
     msg = msg + '   Ex: /logs <<count_val>>\n\n\n'
+    msg = msg + '/cs - gives options to change the cuurent dir to subject dir\n\n'
     msg = msg + '/shutdown - shutdown the bot\n\n'
     msg = msg + '/help - get help from me\n\n\n'
 
+    return msg
+
+def get_subject_info_msg():
+    msg = 'Please choose the subject u want to change \n\n\n'
+    msg = msg + 'Default Dir: \n/change_dir 16m8_vJaE--4LludRLZNSVVP86j1XrAkT\n\n'
+    msg = msg + 'Aptitude: \n/change_dir 1mKRR1XtRgopI9qayFC0cO8FtkvYF5bGg\n\n'
+    msg = msg + 'OS: \n/change_dir 1YIwF5w-TjHD-1FHAzewhIgYDkkKh79K7\n\n'
+    msg = msg + 'TOC CD: \n/change_dir 1SA_vM5GQXYlTuD75cu1hlL8Evbu21ktf\n\n'
+    msg = msg + 'DLD: \n/change_dir 1oZ654qYL3YeafDwEarC7ikj1cNjJk58x\n\n'
+    msg = msg + 'DS AL: \n/change_dir 1L8go76soXhIuCm3ibDARxYzGDZN-FOfu\n\n'
+    msg = msg + 'C: \n/change_dir 1fKt-iciguthTdZ8GmiTwlqnfwzn-O2pi\n\n'
+    msg = msg + 'CO: \n/change_dir 1eB9WPjhwEClUdhCgVUXJTSreNhKf9jx5\n\n'
+    msg = msg + 'CN: \n/change_dir 1lL_LKR-NPphZqR04hgpyKZ6RPbcbFjQ9\n\n'
+    msg = msg + 'DBMS: \n/change_dir 1_G3Gm-naxiD7qK8HWRAihH6AcZjUmwzs\n\n'
+    msg = msg + 'ENG VA: \n/change_dir 1Aoh8KpqfdjUOU49QPx4w9h6X68WE3C8w\n\n'
     return msg
 
 # POOLING....
