@@ -12,17 +12,12 @@ server = Flask(__name__)
 # Pybot
 TOKEN = "1256163582:AAEUbeS_KJ77AXv68zY13beIM03FoG0H7eg"
 
-#  TEST BOT TOKEN
-# TOKEN = "1200831446:AAHIkHX6aWLhCzCx_U1s_6reylc7R7xgBok"
-
-
-bot = telebot.TeleBot(token=TOKEN)
-# bot = telebot.AsyncTeleBot(token=TOKEN)
+# bot = telebot.TeleBot(token=TOKEN)
+bot = telebot.AsyncTeleBot(token=TOKEN)
 
 default_dir = '16m8_vJaE--4LludRLZNSVVP86j1XrAkT'
 current_set_dir = '16m8_vJaE--4LludRLZNSVVP86j1XrAkT'
-heroku_web_url = 'https://py-bot-vimeo.herokuapp.com/'
-# heroku_web_url = 'https://127.0.0.1:5000/'
+
 
 dileep = 760135118
 venu = 642649878
@@ -132,6 +127,13 @@ def get_logs_handler(message):
     else:
         send_chat_message(message, '✋✋✋\n 🛑🛑🛑\n wait, \n Bot is Busy.')
 
+
+@bot.message_handler(commands=['shutdown'])  
+def exit_program(message):
+    print("Exiting program")
+    send_chat_message(message, 'shutting down bot')
+    bot.stop_bot()
+    quit()
 
 
 @bot.message_handler(commands=['d'])  
