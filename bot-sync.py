@@ -7,10 +7,10 @@ import vimeo_api as vimeo
 import shutil
 from slugify import slugify
 
-# TOKEN = "1256163582:AAEUbeS_KJ77AXv68zY13beIM03FoG0H7eg"
+TOKEN = "1256163582:AAEUbeS_KJ77AXv68zY13beIM03FoG0H7eg"
 
 #  TEST BOT TOKEN
-TOKEN = "1200831446:AAHIkHX6aWLhCzCx_U1s_6reylc7R7xgBok"
+# TOKEN = "1200831446:AAHIkHX6aWLhCzCx_U1s_6reylc7R7xgBok"
 
 
 # bot = telebot.TeleBot(token=TOKEN)
