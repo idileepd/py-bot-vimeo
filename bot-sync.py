@@ -28,6 +28,7 @@ download_completed_files = []
 download_failed_files = []
 upload_failed_files = []
 logs = []
+allowed_grp = '-322400391'
 
 bot_downloding_status = False
 
@@ -49,6 +50,9 @@ print('Bot Started :)')
 
 @bot.message_handler(commands=['start']) 
 def send_welcome(message):
+    if isAllowed(message)!=True:
+        send_chat_message(message, 'You are not Authorized')
+        return
     global bot_downloding_status
     if bot_downloding_status == False:
         print(f"\n\n Start MEssage :: \n{message}\n\n")
@@ -58,6 +62,9 @@ def send_welcome(message):
 
 @bot.message_handler(commands=['shutdown'])  
 def exit_program(message):
+    if isAllowed(message)!=True:
+        send_chat_message(message, 'You are not Authorized')
+        return
     # print("Exiting program")
     # send_chat_message(message, 'shutting down bot')
     # bot.stop_bot()
@@ -67,6 +74,9 @@ def exit_program(message):
     
 @bot.message_handler(commands=['help'])
 def send_help(message):
+    if isAllowed(message)!=True:
+        send_chat_message(message, 'You are not Authorized')
+        return
     global bot_downloding_status
     if bot_downloding_status == False:
         msg = get_help_message()
@@ -74,24 +84,24 @@ def send_help(message):
     else:
         send_chat_message(message, '✋✋✋\n 🛑🛑🛑\n wait, \n Bot is Busy')
 
-@bot.message_handler(commands=['cs'])
-def get_cs(message):
-    msg = get_subject_info_msg()
-    send_chat_message(message, msg)
+# @bot.message_handler(commands=['cs'])
+# def get_cs(message):
+#     msg = get_subject_info_msg()
+#     send_chat_message(message, msg)
     
-@bot.message_handler(commands=['change_dir']) 
-def change_download_drive_dir(message):
-    global bot_downloding_status
-    if bot_downloding_status == False:
-        folder_id = message.text[11:]
-        print(folder_id)
-        print("ASSUMING Folder exist bro...")
-        global current_set_dir
-        current_set_dir = folder_id
-        print("Current Set Dir ", current_set_dir)
-        send_chat_message(message, '\nCurrent Directory Id:\n'+current_set_dir)
-    else:
-        send_chat_message(message, '✋✋✋\n 🛑🛑🛑\n wait, \n Bot is Busy.')
+# @bot.message_handler(commands=['change_dir']) 
+# def change_download_drive_dir(message):
+#     global bot_downloding_status
+#     if bot_downloding_status == False:
+#         folder_id = message.text[11:]
+#         print(folder_id)
+#         print("ASSUMING Folder exist bro...")
+#         global current_set_dir
+#         current_set_dir = folder_id
+#         print("Current Set Dir ", current_set_dir)
+#         send_chat_message(message, '\nCurrent Directory Id:\n'+current_set_dir)
+#     else:
+#         send_chat_message(message, '✋✋✋\n 🛑🛑🛑\n wait, \n Bot is Busy.')
     
 
 @bot.message_handler(commands=['reset_dir'])
@@ -111,6 +121,9 @@ def reser_download_drive_dir(message):
 
 @bot.message_handler(commands=['current_dir']) 
 def current_download_drive_dir(message):
+    if isAllowed(message)!=True:
+        send_chat_message(message, 'You are not Authorized')
+        return
     global bot_downloding_status
     if bot_downloding_status == False:
         print("Current Dir ", current_set_dir)
@@ -120,6 +133,9 @@ def current_download_drive_dir(message):
 
 @bot.message_handler(commands=['files'])
 def get_files(message):
+    if isAllowed(message)!=True:
+        send_chat_message(message, 'You are not Authorized')
+        return
     global bot_downloding_status
     if bot_downloding_status == False:
         send_chat_message(message, get_downloaded_files_list())
@@ -128,6 +144,9 @@ def get_files(message):
 
 @bot.message_handler(commands=['logs'])
 def get_logs_handler(message):
+    if isAllowed(message)!=True:
+        send_chat_message(message, 'You are not Authorized')
+        return    
     global bot_downloding_status
     if bot_downloding_status == False:
         count = message.text[6]
@@ -144,6 +163,9 @@ def get_logs_handler(message):
 
 @bot.message_handler(commands=['d'])  
 def name_download(message):
+    if isAllowed(message)!=True:
+        send_chat_message(message, 'You are not Authorized')
+        return
     global bot_downloding_status
     if bot_downloding_status == False:
         try:
@@ -170,6 +192,9 @@ def name_download(message):
 
 @bot.message_handler(commands=['sync']) 
 def send_welcome_test(message):
+    if isAllowed(message)!=True:
+        send_chat_message(message, 'You are not Authorized')
+        return
     global bot_downloding_status
     if bot_downloding_status ==False:
         # print(f"\n\n Start MEssage :: \n{message.text}\n\n")
@@ -317,6 +342,14 @@ def get_logs(count):
         message = message+'\n'+log
     return message    
 
+
+def isAllowed(message):
+    global allowed_grp
+    chat_id = get_chat_id(message)
+    if(chat_id == allowed_grp):
+        return True
+    else:
+        return False
 
 def get_help_message():
     msg = 'List of Commands are :\n\n\n'
