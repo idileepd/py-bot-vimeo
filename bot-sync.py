@@ -184,6 +184,7 @@ def send_welcome_test(message):
 
 
 def download_sync(reqs, message):
+    start_all_at = time.time() 
     global bot_downloding_status
     bot_downloding_status = True
     send_chat_message(message, "Dude, Bot Downloading Started you just chill and come later. \n look for happy face ")
@@ -207,6 +208,9 @@ def download_sync(reqs, message):
     send_chat_message(message, get_downloaded_files_list())
     send_chat_message(message, get_download_failed_files_list())
     send_chat_message(message, get_upload_failed_files_list())
+    end_all_at = time.time()
+    taken_time = (end_all_at - start_all_at)/60
+    send_chat_message(message, 'Total Taken Time :: '+taken_time+' minutes')
     #Clear logs...
     clear_unwanted_logs()
     bot_downloding_status = False
@@ -219,7 +223,7 @@ def download_request(file_name, json_url, message):
     global logs
     global download_failed_files
     global upload_failed_files
-
+    start = time.time()
     logs.append('⭕ FILENAME: '+file_name+' > Download Started')
     print('⭕⭕⭕ \nFILENAME: '+file_name+'\nDwonload Started')
     send_chat_message(message, '⭕⭕⭕ \nFILENAME: '+file_name+'\nDwonload Started')
@@ -238,12 +242,13 @@ def download_request(file_name, json_url, message):
         print(f'\n\n{file_name} uploading..  ::to folder :: {current_set_dir}')
         [upload_status, umsg]= drive.upload_video_to_this_folder(current_set_dir,file_name)
         if(upload_status == True):
-
-            print('🔥🔥🔥 \nFILENAME: '+file_name+'\nUpload Done')
-            send_chat_message(message, '🔥🔥🔥 \nFILENAME: '+file_name+'\nUpload Done')
+            end = time.time()
+            taken_time = (end - start)/60
+            print('🔥🔥🔥 \nFILENAME: '+file_name+'\nUpload Done \nTaken Time :: '+taken_time+' minutes')
+            send_chat_message(message, '🔥🔥🔥 \nFILENAME: '+file_name+'\nUpload Done \nTaken Time :: '+taken_time+' minutes')
             download_completed_files.append('✅ >>> '+file_name)
             logs.append('✅ FILENAME: '+file_name+' > File Downloaded and Uploaded Completely')
-            upload_failed_files
+            
 
         else:
             logs.append('💥 FILENAME: '+file_name+' > Upload failed Gdrive')
