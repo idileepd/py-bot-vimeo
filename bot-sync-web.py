@@ -22,6 +22,7 @@ bot = telebot.TeleBot(token=TOKEN)
 default_dir = '16m8_vJaE--4LludRLZNSVVP86j1XrAkT'
 current_set_dir = '16m8_vJaE--4LludRLZNSVVP86j1XrAkT'
 heroku_web_url = 'https://py-bot-vimeo.herokuapp.com/'
+# heroku_web_url = 'https://127.0.0.1:5000/'
 
 dileep = 760135118
 venu = 642649878
@@ -43,9 +44,6 @@ allowed_grp = -322400391
 
 bot_downloding_status = False
 
-
-
-
 #removing output and temp files
 print("\n\n Removing Output directory and Temp directory")
 if os.path.exists(OUTPUT_DIR) and os.path.isdir(OUTPUT_DIR):
@@ -58,8 +56,14 @@ if os.path.exists(TEMP_DIR) and os.path.isdir(TEMP_DIR):
 
 print('Bot Started :)')
 
+
+
+
+
+
 @bot.message_handler(commands=['add']) 
 def add_grp_user_handle(message):
+    print("\n\n\nGOT ADD REQUEST >>")
     if isAllowed(message)!=True:
         send_chat_message(message, 'You are not Authorized')
         return
@@ -69,6 +73,7 @@ def add_grp_user_handle(message):
 
 @bot.message_handler(commands=['start']) 
 def send_welcome(message):
+    print("\n\n\n<<GOT START REQUEST>>")
     if isAllowed(message)!=True:
         send_chat_message(message, 'You are not Authorized')
         return
@@ -78,21 +83,10 @@ def send_welcome(message):
         send_chat_message(message, 'welcome to glad to see you. \n what you will download today \n😀')
     else:
         send_chat_message(message, '✋✋✋\n 🛑🛑🛑\n wait, \n Bot is Busy')
-
-@bot.message_handler(commands=['shutdown'])  
-def exit_program(message):
-    if isAllowed(message)!=True:
-        send_chat_message(message, 'You are not Authorized')
-        return
-    # print("Exiting program")
-    # send_chat_message(message, 'shutting down bot')
-    # bot.stop_bot()
-    # quit()
-    send_chat_message(message, 'shutting down bot IS NO MORE !!!')
-    
     
 @bot.message_handler(commands=['help'])
 def send_help(message):
+    print("\n\n\n<<GOT HELP REQUEST>>")
     if isAllowed(message)!=True:
         send_chat_message(message, 'You are not Authorized')
         return
@@ -110,6 +104,7 @@ def send_help(message):
 
 @bot.message_handler(commands=['files'])
 def get_files(message):
+    print("\n\n\n<< GOT FILES REQUEST >>")
     if isAllowed(message)!=True:
         send_chat_message(message, 'You are not Authorized')
         return
@@ -124,6 +119,7 @@ def get_files(message):
 
 @bot.message_handler(commands=['logs'])
 def get_logs_handler(message):
+    print("\n\n\n<<GOT LOGS REQUEST>>")
     if isAllowed(message)!=True:
         send_chat_message(message, 'You are not Authorized')
         return    
@@ -146,6 +142,7 @@ def get_logs_handler(message):
 
 @bot.message_handler(commands=['d'])  
 def name_download(message):
+    print("\n\n\n<< GOT DOWNLOAD VIDEO REQ >>")
     if isAllowed(message)!=True:
         send_chat_message(message, 'You are not Authorized')
         return
@@ -178,21 +175,14 @@ def name_download(message):
 
 @bot.message_handler(commands=['sync']) 
 def sync_items(message):
-    print("GOT SYNC CMD")
+    print("\n\n\n<<GOT SYNC CMD>>")
     if isAllowed(message)!=True:
         send_chat_message(message, 'You are not Authorized')
         return
     global bot_downloding_status
     if bot_downloding_status == False:
-        # print(f"\n\n Start MEssage :: \n{message.text}\n\n")
-        # fulltext = message.text[3:].split('*')
-        # send_chat_message(message, 'welcome to glat to see you. \n what you will download today Bro. \n\n '+ get_help_message())
         reqs = message.text.split('\n')
-        print(reqs[1:])
-        # if(reqs[0]!='\\sync'):
-        #     send_chat_message(message, 'Command Error')
-        #     return
-        #Clear logs...
+        print(f"Got requests :: \n{reqs[1:]}")
         clear_unwanted_logs()
         download_sync(reqs[1:], message)
     else:
@@ -200,6 +190,19 @@ def sync_items(message):
         bot.delete_message(get_chat_id(message), message.message_id)
         time.sleep(2)
         bot.delete_message(get_chat_id(message), message.message_id+1)
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -376,16 +379,45 @@ def get_help_message():
     return msg
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @server.route('/' + TOKEN, methods=['POST'])
 def getMessage():
    bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
    return "!", 200
 
-@server.route("/")
+@server.route("/start")
 def webhook():
    bot.remove_webhook()
    bot.set_webhook(url=heroku_web_url + TOKEN)
-   return "!", 200
+   return "Sucessfully added webhook to bot", 200
+
+@server.route("/stop")
+def delete_webhook():
+    bot.remove_webhook()
+    return "Web hook removed !!",200
+
+@server.route("/")
+def info():
+   bot.remove_webhook()
+   bot.set_webhook(url=heroku_web_url + TOKEN)
+   return "Goto page /start >> to start bot.\n /stop >> to stop bot", 200
+
+
+
+
 if __name__ == "__main__":
    server.run(host="0.0.0.0", port=int(os.environ.get('PORT', 5000)))
 
