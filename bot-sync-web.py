@@ -96,9 +96,6 @@ def send_help(message):
         send_chat_message(message, msg)
     else:
         send_chat_message(message, '✋✋✋\n 🛑🛑🛑\n wait, \n Bot is Busy')
-        bot.delete_message(get_chat_id(message), message.message_id)
-        time.sleep(2)
-        bot.delete_message(get_chat_id(message), message.message_id+1)
 
  
 
@@ -134,9 +131,6 @@ def get_logs_handler(message):
             send_chat_message(message, 'Error occured..')
     else:
         send_chat_message(message, '✋✋✋\n 🛑🛑🛑\n wait, \n Bot is Busy.')
-        bot.delete_message(get_chat_id(message), message.message_id)
-        time.sleep(2)
-        bot.delete_message(get_chat_id(message), message.message_id+1)
 
 
 
@@ -168,9 +162,6 @@ def name_download(message):
             bot_downloding_status = False
     else:
         send_chat_message(message, '✋✋✋\n 🛑🛑🛑\n wait, \n Bot is Busy.')
-        bot.delete_message(get_chat_id(message), message.message_id)
-        time.sleep(2)
-        bot.delete_message(get_chat_id(message), message.message_id+1)
 
 
 @bot.message_handler(commands=['sync']) 
@@ -181,17 +172,18 @@ def sync_items(message):
         return
     global bot_downloding_status
     if bot_downloding_status == False:
+        bot_downloding_status = True
         reqs = message.text.split('\n')
         print(f"Got requests :: \n{reqs[1:]}")
         clear_unwanted_logs()
-        download_sync(reqs[1:], message)
+        try:
+            download_sync(reqs[1:], message)
+        except:
+            bot.reply_to(message, "💥💥💥 \nerror Occured !!\n")
+        finally:
+            bot_downloding_status = False
     else:
         send_chat_message(message, '✋✋✋\n 🛑🛑🛑\n wait, \n Bot is Busy.')
-        bot.delete_message(get_chat_id(message), message.message_id)
-        time.sleep(2)
-        bot.delete_message(get_chat_id(message), message.message_id+1)
-
-
 
 
 
@@ -208,8 +200,6 @@ def sync_items(message):
 
 def download_sync(reqs, message):
     start_all_at = time.time() 
-    global bot_downloding_status
-    bot_downloding_status = True
     send_chat_message(message, "Dude, Bot Downloading Started you just chill and come later. \n look for happy face ")
     send_chat_message(message, '😊')
     for req in reqs:
@@ -234,7 +224,6 @@ def download_sync(reqs, message):
     end_all_at = time.time()
     taken_time = (end_all_at - start_all_at)/60
     send_chat_message(message, 'Total Taken Time :: '+taken_time+' minutes')
-    bot_downloding_status = False
 
     
 
