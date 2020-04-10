@@ -29,6 +29,8 @@ download_failed_files = []
 upload_failed_files = []
 logs = []
 
+bot_downloding_status = False
+
 
 
 
@@ -47,8 +49,12 @@ print('Bot Started :)')
 
 @bot.message_handler(commands=['start']) 
 def send_welcome(message):
-    print(f"\n\n Start MEssage :: \n{message}\n\n")
-    send_chat_message(message, 'welcome to glat to see you. \n what you will download today Bro. \n\n '+ get_help_message())
+    global bot_downloding_status
+    if bot_downloding_status == False:
+        print(f"\n\n Start MEssage :: \n{message}\n\n")
+        send_chat_message(message, 'welcome to glat to see you. \n what you will download today Bro. \n\n '+ get_help_message())
+    else:
+        send_chat_message(message, 'Please hold bot is downloading...')
 
 @bot.message_handler(commands=['shutdown'])  
 def exit_program(message):
@@ -60,8 +66,12 @@ def exit_program(message):
     
 @bot.message_handler(commands=['help'])
 def send_help(message):
-    msg = get_help_message()
-    send_chat_message(message, msg)
+    global bot_downloding_status
+    if bot_downloding_status == False:
+        msg = get_help_message()
+        send_chat_message(message, msg)
+    else:
+        send_chat_message(message, 'Please hold bot is downloading...')
 
 @bot.message_handler(commands=['cs'])
 def get_cs(message):
@@ -70,77 +80,110 @@ def get_cs(message):
     
 @bot.message_handler(commands=['change_dir']) 
 def change_download_drive_dir(message):
-    folder_id = message.text[11:]
-    print(folder_id)
-    print("ASSUMING Folder exist bro...")
-    global current_set_dir
-    current_set_dir = folder_id
-    print("Current Set Dir ", current_set_dir)
-    send_chat_message(message, '\nCurrent Directory Id:\n'+current_set_dir)
-
+    global bot_downloding_status
+    if bot_downloding_status == False:
+        folder_id = message.text[11:]
+        print(folder_id)
+        print("ASSUMING Folder exist bro...")
+        global current_set_dir
+        current_set_dir = folder_id
+        print("Current Set Dir ", current_set_dir)
+        send_chat_message(message, '\nCurrent Directory Id:\n'+current_set_dir)
+    else:
+        send_chat_message(message, 'Please hold bot is downloading....')
+    
 
 @bot.message_handler(commands=['reset_dir'])
 def reser_download_drive_dir(message):
-    folder_id = message.text[11:]
-    print(folder_id)
-    global current_set_dir
-    global default_dir
-    current_set_dir = default_dir
-    print("Reset to default directory", current_set_dir)
-    send_chat_message(message, '\nCurrent Directory Id:\n'+current_set_dir)
-
+    global bot_downloding_status
+    if bot_downloding_status == False:
+        folder_id = message.text[11:]
+        print(folder_id)
+        global current_set_dir
+        global default_dir
+        current_set_dir = default_dir
+        print("Reset to default directory", current_set_dir)
+        send_chat_message(message, '\nCurrent Directory Id:\n'+current_set_dir)
+    else:
+        send_chat_message(message, 'Please hold bot is downloading....')
+        
 
 @bot.message_handler(commands=['current_dir']) 
 def current_download_drive_dir(message):
-    print("Current Dir ", current_set_dir)
-    send_chat_message(message, '\nCurrent Directory Id:\n'+current_set_dir)
+    global bot_downloding_status
+    if bot_downloding_status == False:
+        print("Current Dir ", current_set_dir)
+        send_chat_message(message, '\nCurrent Directory Id:\n'+current_set_dir)
+    else:
+        send_chat_message(message, 'Please hold bot is downloading....')
 
 @bot.message_handler(commands=['files'])
 def get_files(message):
-    send_chat_message(message, get_downloaded_files_list())
+    global bot_downloding_status
+    if bot_downloding_status == False:
+        send_chat_message(message, get_downloaded_files_list())
+    else:
+        send_chat_message(message, 'Please hold bot is downloading....')
 
 @bot.message_handler(commands=['logs'])
 def get_logs_handler(message):
-    count = message.text[6]
-    try:
-        send_chat_message(message, 'Logs: \n'+get_logs(int(count)))
-    except:
-        send_chat_message(message, 'Error occured..')
+    global bot_downloding_status
+    if bot_downloding_status == False:
+        count = message.text[6]
+        if count == '':
+            count = '10'
+        try:
+            send_chat_message(message, 'Logs: \n'+get_logs(int(count)))
+        except:
+            send_chat_message(message, 'Error occured..')
+    else:
+        send_chat_message(message, 'Please hold bot is downloading....')
 
 
 
 @bot.message_handler(commands=['d'])  
 def name_download(message):
-    try:
-        fulltext = message.text[3:].split('@')
-        if((fulltext[1] is None) or ('json' not in fulltext[1])):
-            return bot.reply_to(message, "💥💥💥 vimeo url err")
-        if(fulltext[0] is None):
-            return bot.reply_to(message, "💥💥💥 filename err")
-        fulltext[0] = slugify(fulltext[0])
-        download_request(fulltext[0], fulltext[1], message)
-    
-    except IndexError:
-        send_chat_message(message, '💥💥💥\nFILENAME: '+fulltext[0]+'\nPlease check command.')
-        print(f"\n\n\n\n\n {fulltext} command error of /d")
-    except:
-        print(f"\n\n\n\n\n {fulltext} Something err in download_request() function.")
-        send_chat_message(message, '💥💥💥\nFILENAME: '+fulltext[0]+'\nSomething went wrong')
-
+    global bot_downloding_status
+    if bot_downloding_status == False:
+        try:
+            fulltext = message.text[3:].split('@')
+            if((fulltext[1] is None) or ('json' not in fulltext[1])):
+                return bot.reply_to(message, "💥💥💥 vimeo url err")
+            if(fulltext[0] is None):
+                return bot.reply_to(message, "💥💥💥 filename err")
+            fulltext[0] = slugify(fulltext[0])
+            download_request(fulltext[0], fulltext[1], message)
+        
+        except IndexError:
+            send_chat_message(message, '💥💥💥\nFILENAME: '+fulltext[0]+'\nPlease check command.')
+            print(f"\n\n\n\n\n {fulltext} command error of /d")
+        except:
+            print(f"\n\n\n\n\n {fulltext} Something err in download_request() function.")
+            send_chat_message(message, '💥💥💥\nFILENAME: '+fulltext[0]+'\nSomething went wrong')
+    else:
+        send_chat_message(message, 'Please hold bot is downloading....')
 
 
 @bot.message_handler(commands=['sync']) 
 def send_welcome_test(message):
-    # print(f"\n\n Start MEssage :: \n{message.text}\n\n")
-    # fulltext = message.text[3:].split('*')
-    # send_chat_message(message, 'welcome to glat to see you. \n what you will download today Bro. \n\n '+ get_help_message())
-    reqs = message.text.split('\n')
-    print(reqs[1:])
-    download_sync(reqs[1:], message)
+    global bot_downloding_status
+    if bot_downloding_status ==False:
+        # print(f"\n\n Start MEssage :: \n{message.text}\n\n")
+        # fulltext = message.text[3:].split('*')
+        # send_chat_message(message, 'welcome to glat to see you. \n what you will download today Bro. \n\n '+ get_help_message())
+        reqs = message.text.split('\n')
+        print(reqs[1:])
+        download_sync(reqs[1:], message)
+    else:
+        send_chat_message(message, 'Please hold bot is downloading....')
+
 
 
 def download_sync(reqs, message):
+    global bot_downloding_status
+    bot_downloding_status = True
     send_chat_message(message, "Dude, Bot Downloading Started you just chill and come later. \n look for happy face ")
+    send_chat_message(message, '😊')
     for req in reqs:
         fulltext = req.split('@')
         print(fulltext)
@@ -160,6 +203,9 @@ def download_sync(reqs, message):
     send_chat_message(message, get_downloaded_files_list())
     send_chat_message(message, get_download_failed_files_list())
     send_chat_message(message, get_upload_failed_files_list())
+    #Clear logs...
+    clear_unwanted_logs()
+    bot_downloding_status = False
 
     
 
@@ -206,6 +252,13 @@ def download_request(file_name, json_url, message):
         send_chat_message(message, '💥💥💥\n'+file_name+'Download failed')
         print('💥💥💥\nFILENAME: '+file_name+'Download failed')
     return
+
+
+def clear_unwanted_logs():
+    global download_completed_files
+    global download_failed_files
+    global upload_failed_files
+
 
 
 def send_chat_message(message, msg):
