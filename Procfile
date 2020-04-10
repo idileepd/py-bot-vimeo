@@ -1,1 +1,1 @@
-web: python bot-sync-web.py
+web: python bot-web.py
