@@ -1,1 +1,1 @@
-web: python3 bot-web.py
+web: python3 bot-pol.py
