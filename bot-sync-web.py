@@ -387,22 +387,16 @@ def getMessage():
    bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
    return "!", 200
 
-@server.route("/start")
+@server.route("/")
 def webhook():
    bot.remove_webhook()
    bot.set_webhook(url=heroku_web_url + TOKEN)
-   return "Sucessfully added webhook to bot", 200
+   return "Sucessfully added webhook to bot:<br>To remove /stop", 200
 
 @server.route("/stop")
 def delete_webhook():
     bot.remove_webhook()
     return "Web hook removed !!",200
-
-@server.route("/")
-def info():
-   bot.remove_webhook()
-   bot.set_webhook(url=heroku_web_url + TOKEN)
-   return "Goto page /start >> to start bot.\n /stop >> to stop bot", 200
 
 
 

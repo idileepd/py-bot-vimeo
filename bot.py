@@ -6,25 +6,30 @@ import drive_api as drive
 import vimeo_api as vimeo
 import shutil
 from slugify import slugify
-from flask import Flask, request
 
+#SERVER MODE
+from flask import Flask, request
 server = Flask(__name__)
+heroku_web_url = 'https://py-bot-vimeo.herokuapp.com/'
+
+
+
 # Pybot
 TOKEN = "1256163582:AAEUbeS_KJ77AXv68zY13beIM03FoG0H7eg"
-
 # bot = telebot.TeleBot(token=TOKEN)
 bot = telebot.AsyncTeleBot(token=TOKEN)
-
-default_dir = '16m8_vJaE--4LludRLZNSVVP86j1XrAkT'
-current_set_dir = '16m8_vJaE--4LludRLZNSVVP86j1XrAkT'
 
 
 dileep = 760135118
 venu = 642649878
 kamesh = 599072894
 allowed_grp = -1001413818920
-
 allowed_users_grp = [dileep, allowed_grp]
+
+
+default_dir = '16m8_vJaE--4LludRLZNSVVP86j1XrAkT'
+current_set_dir = '16m8_vJaE--4LludRLZNSVVP86j1XrAkT'
+
 
 
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
@@ -38,6 +43,10 @@ logs = []
 allowed_grp = -322400391
 
 bot_downloding_status = False
+
+
+
+
 
 #removing output and temp files
 print("\n\n Removing Output directory and Temp directory")
@@ -389,13 +398,33 @@ def get_help_message():
 
 
 
-# POOLING....
-while True:
-    try:
-        bot.polling(none_stop=True)
-    except Exception:
-        print("BOT GOT RUNTIME EXCEPTION EXITING...")
-        exit()
+# # POOLING....
+# while True:
+#     try:
+#         bot.polling(none_stop=True)
+#     except Exception:
+#         print("BOT GOT RUNTIME EXCEPTION EXITING...")
+#         exit()
         
+
+#server MODE
+@server.route('/' + TOKEN, methods=['POST'])
+def getMessage():
+   bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
+   return "!", 200
+
+@server.route("/")
+def webhook():
+   bot.remove_webhook()
+   bot.set_webhook(url=heroku_web_url + TOKEN)
+   return "Sucessfully added webhook to bot:<br>To remove /stop", 200
+
+@server.route("/stop")
+def delete_webhook():
+    bot.remove_webhook()
+    return "Web hook removed !!",200
+
+
+
 
 
