@@ -72,7 +72,7 @@ def send_welcome(message):
     global bot_downloding_status
     if bot_downloding_status == False:
         print(f"\n\n Start MEssage :: \n{message}\n\n")
-        send_chat_message(message, 'welcome to glat to see you. \n what you will download today Bro. \n\n '+ get_help_message())
+        send_chat_message(message, 'welcome to glad to see you. \n what you will download today \n😀')
     else:
         send_chat_message(message, '✋✋✋\n 🛑🛑🛑\n wait, \n Bot is Busy')
 
@@ -99,6 +99,10 @@ def send_help(message):
         send_chat_message(message, msg)
     else:
         send_chat_message(message, '✋✋✋\n 🛑🛑🛑\n wait, \n Bot is Busy')
+        time.sleep(2)
+        # bot.delete_message(get_chat_id(message), message.message_id)
+        # bot.delete_message(get_chat_id(message), message.message_id-1)
+
  
 
 @bot.message_handler(commands=['files'])
