@@ -58,11 +58,12 @@ def send_welcome(message):
 
 @bot.message_handler(commands=['shutdown'])  
 def exit_program(message):
-    print("Exiting program")
-    send_chat_message(message, 'shutting down bot')
-    bot.stop_bot()
-    quit()
-
+    # print("Exiting program")
+    # send_chat_message(message, 'shutting down bot')
+    # bot.stop_bot()
+    # quit()
+    send_chat_message(message, 'shutting down bot IS NO MORE !!!')
+    
     
 @bot.message_handler(commands=['help'])
 def send_help(message):
@@ -258,6 +259,9 @@ def clear_unwanted_logs():
     global download_completed_files
     global download_failed_files
     global upload_failed_files
+    download_completed_files.clear()
+    download_failed_files.clear()
+    upload_failed_files.clear()
 
 
 
