@@ -25,7 +25,7 @@ OUTPUT_DIR = '/'.join(OUTPUT_DIR.split('\\'))
 creds = None
 
 
-print("Executing Drive.py")
+print("\n\n\n\nExecuting Drive UPLOAD.py")
 print("Getting tokne.pickle")
 
 print(f"BASE DIR :: {BASE_DIR}")
@@ -43,12 +43,12 @@ else:
 service = build('drive', 'v3', credentials=creds)
 
 
-def upload_video_to_this_folder(folder_id, file_name):
-    file_name = file_name+'.mp4'
-    print(f"Uploading {file_name} to my_folder.. :: {folder_id}")
+def upload_video(file_name):
+    # file_name = file_name+'.mp4'
+    print(f"Uploading {file_name} to my_folder.. :: {my_folder_id}")
     file_metadata = {
     'name': file_name,
-    'parents': [folder_id]
+    'parents': [my_folder_id]
     }
     file_path = os.path.join(OUTPUT_DIR, file_name)
     file_path = '/'.join(file_path.split('\\'))
@@ -59,6 +59,6 @@ def upload_video_to_this_folder(folder_id, file_name):
     print(f"File upload done : {file_name} :: \n {file_res}")
     print(f"deleting file : {file_path}")
     media =None # to close connection with file
-    # os.remove(file_path)
+    os.remove(file_path)
 
-upload_video_to_this_folder(my_folder_id, 'bramu')
+# upload_video_to_this_folder(my_folder_id, 'bramu')
