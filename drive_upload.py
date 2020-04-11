@@ -77,3 +77,5 @@ def upload_allfiles():
     else:
         print("No OUTPUT Directory Exist")
         return "No Directory Exist"
+
+upload_allfiles()
