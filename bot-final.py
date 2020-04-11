@@ -148,9 +148,11 @@ def exit_program(message):
     
 
 
-@bot.message_handler(commands=['upload_all'])  
+@bot.message_handler(commands=['upload'])  
 def upload_allprog(message):
+    send_chat_message(message, "Uploading all...")
     os.system("python3 upload_all.py")
+    send_chat_message(message, "started executing.. or over ??")
 
 
 @bot.message_handler(commands=['d'])  
