@@ -74,6 +74,13 @@ def add_grp_user_handle(message):
     print(f"ALLOWING USER ID OR GRP ID:: {message.text.split(' ')[1]}")
     allow_this_grp_user(int(message.text.split(' ')[1]), message)
 
+@bot.message_handler(commands=['clear']) 
+def clear_dirs_handle(message):
+    print("\n\n\nGOT Clear REQUEST >>")
+    if isAllowed(message)!=True:
+        send_chat_message(message, 'You are not Authorized')
+        return
+    clear_dirs()
 
 @bot.message_handler(commands=['start']) 
 def send_welcome(message):
@@ -296,7 +303,16 @@ def clear_unwanted_logs():
     download_failed_files.clear()
     upload_failed_files.clear()
 
+def clear_dirs():
+    #removing output and temp files
+    print("\n\n Removing Output directory and Temp directory")
+    if os.path.exists(OUTPUT_DIR) and os.path.isdir(OUTPUT_DIR):
+        print('removing output directory')
+        shutil.rmtree(OUTPUT_DIR)
 
+    if os.path.exists(TEMP_DIR) and os.path.isdir(TEMP_DIR):
+        print('removing temp directory')
+        shutil.rmtree(TEMP_DIR)
 
 def send_chat_message(message, msg):
     chat_id = get_chat_id(message)
