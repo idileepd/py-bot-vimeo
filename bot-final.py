@@ -183,70 +183,6 @@ def name_download(message):
         send_chat_message(message, '✋✋✋\n 🛑🛑🛑\n wait, \n Bot is Busy.')
 
 
-# @bot.message_handler(commands=['sync']) 
-# def sync_items(message):
-#     print("\n\n\n<<GOT SYNC CMD>>")
-#     if isAllowed(message)!=True:
-#         send_chat_message(message, 'You are not Authorized')
-#         return
-#     global bot_downloding_status
-#     if bot_downloding_status == False:
-#         bot_downloding_status = True
-#         reqs = message.text.split('\n')
-#         print(f"Got requests :: \n{reqs[1:]}")
-#         clear_unwanted_logs()
-#         try:
-#             download_sync(reqs[1:], message)
-#         except:
-#             bot.reply_to(message, "💥💥💥 \nerror Occured !!\n")
-#         finally:
-#             bot_downloding_status = False
-#     else:
-#         send_chat_message(message, '✋✋✋\n 🛑🛑🛑\n wait, \n Bot is Busy.')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# def download_sync(reqs, message):
-#     start_all_at = time.time() 
-#     send_chat_message(message, "Dude, Bot Downloading Started you just chill and come later. \n look for happy face ")
-#     send_chat_message(message, '😊')
-#     print(f"\n\n\n\nTOTAL REQUESTS GOT :: {reqs}")
-#     for req in reqs:
-#         fulltext = req.split('@')
-#         print(f"\n\n\n DOWNLOADING CURRENT REQUEST :: {fulltext}")
-#         if((fulltext[1] is None) or ('json' not in fulltext[1])):
-#             bot.reply_to(message, fulltext[0]+" 💥💥💥 vimeo url err")
-#             continue
-#         if(fulltext[0] is None):
-#             bot.reply_to(message, fulltext[0]+" 💥💥💥 filename err")
-#             continue
-#         fulltext[0] = slugify(fulltext[0])
-
-#         print("Downloading ... ")
-#         print(f"Downoading : {fulltext[0]} - URL : {fulltext[1]}")
-
-#         download_request(fulltext[0], fulltext[1], message)
-#     send_chat_message(message, 'All downloads done 😊😊😊😊\n😊😊😊😊\n😊😊😊😊 \n Downloaded files are her :: ')
-#     send_chat_message(message, get_downloaded_files_list())
-#     send_chat_message(message, get_download_failed_files_list())
-#     send_chat_message(message, get_upload_failed_files_list())
-#     end_all_at = time.time()
-#     taken_time = (end_all_at - start_all_at)/60
-#     taken_time = str(taken_time)
-#     print('Total Taken Time :: '+str(taken_time)+' minutes')
-#     send_chat_message(message, 'Total Taken Time :: '+taken_time+' minutes')
-
     
 
 
@@ -258,26 +194,30 @@ def download_request(file_name, json_url, message):
     start = time.time()
     logs.append('⭕ FILENAME: '+file_name+' > Download Started')
     print('⭕⭕⭕ \nFILENAME: '+file_name+'\nDwonload Started')
+
     send_chat_message(message, '⭕⭕⭕ \nFILENAME: '+file_name+'\nDwonload Started')
     #Downloading Vimeo File
     [download_status, dmsg] = vimeo.vimeo_downloader(json_url, file_name, False, False)
     print(dmsg)
+    
 
     if(download_status == True):
+        end = time.time()
+        taken_time = (end - start)/60
+        taken_time = str(taken_time)
+        send_chat_message(message, '🔵🔵🔵 \nFILENAME: '+file_name+'\nDownload Done \nTaken Time :: '+taken_time+' minutes')
 
         print('🔵🔵🔵 \nFILENAME: '+file_name+'\nDownload Done')
-        send_chat_message(message, '🔵🔵🔵 \nFILENAME: '+file_name+'\nDownload Done')
+        
         logs.append('🔵 FILENAME: '+file_name+' > File Downloaded')
 
         #UPLOAD File TO GDRIVE
-        global current_set_dir
-        print(f'\n\n{file_name} uploading..  ::to folder :: {current_set_dir}')
-        # [upload_status, umsg]= drive.upload_video(file_name)
+        # global current_set_dir
+        # print(f'\n\n{file_name} uploading..  ::to folder :: {current_set_dir}')
+        # # [upload_status, umsg]= drive.upload_video(file_name)
         # print(umsg)
         # if(upload_status == True):
-        #     end = time.time()
-        #     taken_time = (end - start)/60
-        #     taken_time = str(taken_time)
+
         #     print('🔥🔥🔥 \nFILENAME: '+file_name+'\nUpload Done \nTaken Time :: '+taken_time+' minutes')
         #     send_chat_message(message, '🔥🔥🔥 \nFILENAME: '+file_name+'\nUpload Done \nTaken Time :: '+taken_time+' minutes')
         #     download_completed_files.append('✅ >>> '+file_name)
