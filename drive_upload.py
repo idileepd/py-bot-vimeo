@@ -88,6 +88,7 @@ def upload_video(file_name):
 
     while response is None:
         status, response = request.next_chunk()
+        print(status)
         if status.progress() is None:
             value = 1
         else:
