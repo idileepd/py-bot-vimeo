@@ -14,8 +14,8 @@ from slugify import slugify
 
 
 
-# Pybot
-TOKEN = "1256163582:AAEUbeS_KJ77AXv68zY13beIM03FoG0H7eg"
+# Pybot bot adv token
+TOKEN = "1161305170:AAHibSPAJOtk-7yi1FcA8WIlYDOGh5XC-e8"
 # bot = telebot.TeleBot(token=TOKEN)
 bot = telebot.AsyncTeleBot(token=TOKEN)
 
@@ -24,7 +24,7 @@ dileep = 760135118
 venu = 642649878
 kamesh = 599072894
 allowed_grp = -1001413818920
-allowed_users_grp = [dileep, allowed_grp]
+allowed_users_grp = [dileep, allowed_grp, venu,]
 
 
 default_dir = '16m8_vJaE--4LludRLZNSVVP86j1XrAkT'
