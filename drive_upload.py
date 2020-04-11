@@ -43,7 +43,7 @@ else:
 service = build('drive', 'v3', credentials=creds)
 
 
-def upload_video(file_name):
+def upload_video_old(file_name):
     # file_name = file_name+'.mp4'
     print(f"Uploading {file_name} to my_folder.. :: {my_folder_id}")
     file_metadata = {
@@ -53,7 +53,7 @@ def upload_video(file_name):
     file_path = os.path.join(OUTPUT_DIR, file_name)
     file_path = '/'.join(file_path.split('\\'))
     print(f"File path : {file_path}")
-    media = MediaFileUpload(file_path, mimetype='video/mp4')
+    media = MediaFileUpload(file_path, mimetype='video/mp4',)
     file_res = service.files().create(body=file_metadata, media_body=media,).execute() # pylint: disable=maybe-no-member
     print('File ID: %s' % file_res.get('id'))
     print(f"File upload done : {file_name} :: \n {file_res}")
@@ -62,6 +62,44 @@ def upload_video(file_name):
     os.remove(file_path)
 
 # upload_video_to_this_folder(my_folder_id, 'bramu')
+
+
+def upload_video(file_name):
+    # file_name = file_name+'.mp4'
+    print(f"Uploading {file_name} to my_folder.. :: {my_folder_id}")
+    
+    file_metadata = {
+    'name': file_name,
+    'parents': [my_folder_id]
+    }
+
+    file_path = os.path.join(OUTPUT_DIR, file_name)
+    file_path = '/'.join(file_path.split('\\'))
+
+    print(f"File path : {file_path}")
+
+    media = MediaFileUpload(file_path, mimetype='video/mp4', resumable=True)
+    request = service.files().create(body=file_metadata, media_body=media,).execute() # pylint: disable=maybe-no-member
+    response = None
+
+    # print('File ID: %s' % response.get('id'))
+    # print(f"File upload done : {file_name} :: \n {file_res}")
+    # print(f"deleting file : {file_path}")
+
+    while response is None:
+        status, response = request.next_chunk()
+        percent = str(int(status.progress() * 100))
+        if status:
+            print("Uploaded : "+percent)
+    print("Download Completed::")
+    print(response)
+    media =None # to close connection with file
+    
+    
+    os.remove(file_path)
+
+
+
 
 def upload_allfiles():
     if os.path.exists(OUTPUT_DIR) and os.path.isdir(OUTPUT_DIR):
