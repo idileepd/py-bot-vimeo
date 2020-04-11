@@ -149,7 +149,7 @@ def exit_program(message):
     print("Exiting program")
     send_chat_message(message, 'shutting down bot')
     bot.stop_bot()
-    quit()
+    sys.exit("Bot Shudown...")
 
 
 @bot.message_handler(commands=['d'])  
