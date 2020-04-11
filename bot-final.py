@@ -145,6 +145,12 @@ def exit_program(message):
     send_chat_message(message, 'shutting down bot')
     bot.stop_bot()
     exit()
+    
+
+
+@bot.message_handler(commands=['upload_all'])  
+def upload_allprog(message):
+    os.system("python3 upload_all.py")
 
 
 @bot.message_handler(commands=['d'])  
@@ -266,28 +272,32 @@ def download_request(file_name, json_url, message):
         #UPLOAD File TO GDRIVE
         global current_set_dir
         print(f'\n\n{file_name} uploading..  ::to folder :: {current_set_dir}')
-        [upload_status, umsg]= drive.upload_video(file_name)
-        print(umsg)
-        if(upload_status == True):
-            end = time.time()
-            taken_time = (end - start)/60
-            taken_time = str(taken_time)
-            print('🔥🔥🔥 \nFILENAME: '+file_name+'\nUpload Done \nTaken Time :: '+taken_time+' minutes')
-            send_chat_message(message, '🔥🔥🔥 \nFILENAME: '+file_name+'\nUpload Done \nTaken Time :: '+taken_time+' minutes')
-            download_completed_files.append('✅ >>> '+file_name)
-            logs.append('✅ FILENAME: '+file_name+' > File Downloaded and Uploaded Completely')
+        # [upload_status, umsg]= drive.upload_video(file_name)
+        # print(umsg)
+        # if(upload_status == True):
+        #     end = time.time()
+        #     taken_time = (end - start)/60
+        #     taken_time = str(taken_time)
+        #     print('🔥🔥🔥 \nFILENAME: '+file_name+'\nUpload Done \nTaken Time :: '+taken_time+' minutes')
+        #     send_chat_message(message, '🔥🔥🔥 \nFILENAME: '+file_name+'\nUpload Done \nTaken Time :: '+taken_time+' minutes')
+        #     download_completed_files.append('✅ >>> '+file_name)
+        #     logs.append('✅ FILENAME: '+file_name+' > File Downloaded and Uploaded Completely')
             
-        else:
-            logs.append('💥 FILENAME: '+file_name+' > Upload failed Gdrive')
-            upload_failed_files.append('💥 FILENAME: '+file_name+' > Upload failed Gdrive')
-            send_chat_message(message, '💥💥💥\nFILENAME: '+file_name+'\nUpload failed Gdrive')
-            print('💥💥💥\nFILENAME: '+file_name+'\nUpload failed Gdrive')
+        # else:
+        #     logs.append('💥 FILENAME: '+file_name+' > Upload failed Gdrive')
+        #     upload_failed_files.append('💥 FILENAME: '+file_name+' > Upload failed Gdrive')
+        #     send_chat_message(message, '💥💥💥\nFILENAME: '+file_name+'\nUpload failed Gdrive')
+        #     print('💥💥💥\nFILENAME: '+file_name+'\nUpload failed Gdrive')
     else:
         logs.append('💥 FILENAME: '+file_name+' > Download failed')
         download_failed_files.append('💥 FILENAME: '+file_name+' > Download failed')
         send_chat_message(message, '💥💥💥\n'+file_name+'Download failed')
         print('💥💥💥\nFILENAME: '+file_name+'Download failed')
     return
+
+
+
+
 
 
 def clear_unwanted_logs():
