@@ -79,7 +79,7 @@ def upload_video(file_name):
     print(f"File path : {file_path}")
 
     media = MediaFileUpload(file_path, mimetype='video/mp4', resumable=True)
-    request = service.files().create(body=file_metadata, media_body=media,).execute() # pylint: disable=maybe-no-member
+    request = service.files().create(body=file_metadata, media_body=media,) # pylint: disable=maybe-no-member
     response = None
 
     # print('File ID: %s' % response.get('id'))
