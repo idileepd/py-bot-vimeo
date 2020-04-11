@@ -130,41 +130,6 @@ def name_download(message):
         send_chat_message(message, '✋✋✋\n 🛑🛑🛑\n wait, \n Bot is Busy.')
 
 
-# @bot.message_handler(commands=['upload'])
-# def upload_files_handle(message):
-#     print("\n\n\n<<Upload ALL Files REQUEST>>")
-#     if isAllowed(message)!=True :
-#         send_chat_message(message, 'You are not Authorized')
-#         return
-#     global bot_downloding_status
-#     if bot_downloding_status == False:
-#         bot_downloding_status = True
-#         try:
-#             send_chat_message(message, "Uploading files started..")
-#             upload_allfiles(message)
-#             send_chat_message(message, "Uploaded All Files...")
-#         except:
-#             bot.reply_to(message, "💥💥💥 \nerror Occured in uploading all files...!!\n")
-#         finally:
-#             bot_downloding_status = False
-#     else:
-#         send_chat_message(message, '✋✋✋\n wait, \n Bot is Busy. ')
-
-@bot.message_handler(commands=['upload'])
-def upload_files_handle(message):
-    print("\n\n\n<<Upload ALL Files REQUEST>>")
-    if isAllowed(message)!=True :
-        send_chat_message(message, 'You are not Authorized')
-        return
-    global bot_downloding_status
-    if bot_downloding_status == False:
-        bot_downloding_status = True
-        send_chat_message(message, "Uploading files started..")
-        upload_allfiles(message)
-
-    else:
-        send_chat_message(message, '✋✋✋\n wait, \n Bot is Busy. ')
-
 
 def upload_allfiles(message):
     if os.path.exists(OUTPUT_DIR) and os.path.isdir(OUTPUT_DIR):

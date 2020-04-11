@@ -62,3 +62,18 @@ def upload_video(file_name):
     os.remove(file_path)
 
 # upload_video_to_this_folder(my_folder_id, 'bramu')
+
+def upload_allfiles():
+    if os.path.exists(OUTPUT_DIR) and os.path.isdir(OUTPUT_DIR):
+        total_files = str(len(os.listdir(OUTPUT_DIR)))
+        print(f"\n\nTotal files {total_files}")
+
+        for index, filename in enumerate(os.listdir(OUTPUT_DIR)):
+            num = index+1
+            print("\n\nUploadingFile :: "+filename)
+            print(str(num)+'/'+total_files+'\n Uploading File..\n'+filename)
+            upload_video(filename)
+        return "All files upload complete"
+    else:
+        print("No OUTPUT Directory Exist")
+        return "No Directory Exist"
