@@ -65,7 +65,7 @@ def upload_video_old(file_name):
 
 
 def upload_video(file_name):
-    # file_name = file_name+'.mp4'
+    file_name = file_name+'.mp4'
     print(f"Uploading {file_name} to my_folder.. :: {my_folder_id}")
     
     file_metadata = {
