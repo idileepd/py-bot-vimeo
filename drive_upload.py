@@ -88,7 +88,10 @@ def upload_video(file_name):
 
     while response is None:
         status, response = request.next_chunk()
-        percent = str(int(status.progress() * 100))
+        value = status.progress()
+        if value is None:
+            value = 1
+        percent = str(int(value * 100))
         if status:
             print("Uploaded : "+percent)
     print("Download Completed::")
@@ -117,3 +120,5 @@ def upload_allfiles():
         return "No Directory Exist"
 
 upload_allfiles()
+
+# httplib2==0.15.0 << Down graded.
