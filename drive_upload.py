@@ -88,48 +88,45 @@ def upload_video(file_name):
 
     while response is None:
         status, response = request.next_chunk()
-        print(status)
-        print(response)
+        # print(status)
+        # print(response)
 
         if status is None:
-            print("Status is none\n")
+            # print("Status is none\n")
             value = 1
-            print(value)
+            # print(value)
         else:
-            print("Status is not none")
+            # print("Status is not none")
             value = status.progress()
-            print(value)
+            # print(value)
             percent = str(int(value * 100))
             print("Uploaded : "+percent +'%')
 
-            
-    
-
-    print("Download Completed::")
+    print("Upload Completed::")
     print(response)
     media =None # to close connection with file
-    
-    
+    print("DELETING THIS FILE...")
     os.remove(file_path)
+    return [True, 'Successfully Uploaded to Gdrive.. :)']
 
 
 
 
-def upload_allfiles():
-    if os.path.exists(OUTPUT_DIR) and os.path.isdir(OUTPUT_DIR):
-        total_files = str(len(os.listdir(OUTPUT_DIR)))
-        print(f"\n\nTotal files {total_files}")
+# def upload_allfiles():
+#     if os.path.exists(OUTPUT_DIR) and os.path.isdir(OUTPUT_DIR):
+#         total_files = str(len(os.listdir(OUTPUT_DIR)))
+#         print(f"\n\nTotal files {total_files}")
 
-        for index, filename in enumerate(os.listdir(OUTPUT_DIR)):
-            num = index+1
-            print("\n\nUploadingFile :: "+filename)
-            print(str(num)+'/'+total_files+'\n Uploading File..\n'+filename)
-            upload_video(filename)
-        return "All files upload complete"
-    else:
-        print("No OUTPUT Directory Exist")
-        return "No Directory Exist"
+#         for index, filename in enumerate(os.listdir(OUTPUT_DIR)):
+#             num = index+1
+#             print("\n\nUploadingFile :: "+filename)
+#             print(str(num)+'/'+total_files+'\n Uploading File..\n'+filename)
+#             upload_video(filename)
+#         return "All files upload complete"
+#     else:
+#         print("No OUTPUT Directory Exist")
+#         return "No Directory Exist"
 
-upload_allfiles()
+# upload_allfiles()
 
 # httplib2==0.15.0 << Down graded.
