@@ -109,7 +109,7 @@ def name_download(message):
     global bot_downloding_status
     if bot_downloding_status == False:
         try:
-            bot_downloding_status =True
+            # bot_downloding_status =True
             fulltext = message.text[3:].split('@')
             if((fulltext[1] is None) or ('json' not in fulltext[1])):
                 return bot.reply_to(message, "💥💥💥 vimeo url err")
@@ -124,8 +124,8 @@ def name_download(message):
         except:
             print(f"\n\n\n\n\n {fulltext} Something err in download_request() function.")
             send_chat_message(message, '💥💥💥\nFILENAME: '+fulltext[0]+'\nSomething went wrong')
-        finally:
-            bot_downloding_status = False
+        # finally:
+        #     # bot_downloding_status = False
     else:
         send_chat_message(message, '✋✋✋\n 🛑🛑🛑\n wait, \n Bot is Busy.')
 
@@ -140,7 +140,9 @@ def upload_files_handle(message):
     if bot_downloding_status == False:
         bot_downloding_status = True
         try:
-           upload_allfiles(message)
+            send_chat_message(message, "Uploading files started..")
+            upload_allfiles(message)
+            send_chat_message(message, "Uploaded All Files...")
         except:
             bot.reply_to(message, "💥💥💥 \nerror Occured in uploading all files...!!\n")
         finally:
@@ -151,13 +153,14 @@ def upload_files_handle(message):
 
 def upload_allfiles(message):
     if os.path.exists(OUTPUT_DIR) and os.path.isdir(OUTPUT_DIR):
-        for filename in os.listdir(OUTPUT_DIR):
-            if filename.endswith(".mp4"): 
-                print(f"\n\n\nCurrent File : {filename}")
-                drive_upload.upload_video(filename)
-                continue
-            else:
-                continue
+        total_files = str(len(os.listdir(OUTPUT_DIR)))
+        print(f"Total files {total_files}")
+        for index, filename in enumerate(os.listdir(OUTPUT_DIR)):
+            print(f"\n\n\nCurrent File : {filename}")
+            send_chat_message(message, str(index)+'/'+total_files+'\n Uploading File..\n'+filename)
+            drive_upload.upload_video(filename)
+            continue
+
         return "All files upload complete"
     else:
         send_chat_message(message, "No OUTPUT Directory Exist")
