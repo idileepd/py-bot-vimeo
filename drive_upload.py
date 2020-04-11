@@ -88,12 +88,13 @@ def upload_video(file_name):
 
     while response is None:
         status, response = request.next_chunk()
-        value = status.progress()
-        if value is None:
+        if status.progress() is None:
             value = 1
+        else:
+            value = status.progress()
         percent = str(int(value * 100))
         if status:
-            print("Uploaded : "+percent)
+            print("Uploaded : "+percent +'%')
     print("Download Completed::")
     print(response)
     media =None # to close connection with file
