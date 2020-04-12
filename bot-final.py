@@ -15,10 +15,16 @@ from slugify import slugify
 
 
 # Pybot bot adv token
-TOKEN = "1161305170:AAHibSPAJOtk-7yi1FcA8WIlYDOGh5XC-e8"
+# TOKEN = "1161305170:AAHibSPAJOtk-7yi1FcA8WIlYDOGh5XC-e8"
 # Pybot
 # TOKEN = "1256163582:AAEUbeS_KJ77AXv68zY13beIM03FoG0H7eg"
 # bot = telebot.TeleBot(token=TOKEN)
+
+
+# PYBOT 2
+TOKEN = '1218272408:AAG5HBzOQKlpSmsrOBYlhXOqKOcxgS-Fdz0'
+
+
 bot = telebot.AsyncTeleBot(token=TOKEN)
 
 
@@ -152,7 +158,7 @@ def exit_program(message):
 def upload_allprog(message):
     send_chat_message(message, "Uploading all...")
     os.system("python3 upload_all.py")
-    send_chat_message(message, "started executing.. or over ??")
+    send_chat_message(message, "Uploaded all files...")
 
 
 @bot.message_handler(commands=['d'])  
