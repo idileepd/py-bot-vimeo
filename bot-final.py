@@ -14,15 +14,22 @@ from slugify import slugify
 
 
 
-# Pybot bot adv token
-# TOKEN = "1161305170:AAHibSPAJOtk-7yi1FcA8WIlYDOGh5XC-e8"
-# Pybot
-# TOKEN = "1256163582:AAEUbeS_KJ77AXv68zY13beIM03FoG0H7eg"
-# bot = telebot.TeleBot(token=TOKEN)
+#### Pybot bot adv token
+TOKEN = "1161305170:AAHibSPAJOtk-7yi1FcA8WIlYDOGh5XC-e8"
 
 
-# PYBOT 2
-TOKEN = '1218272408:AAG5HBzOQKlpSmsrOBYlhXOqKOcxgS-Fdz0'
+###### PYBOT 2
+# TOKEN = '1218272408:AAG5HBzOQKlpSmsrOBYlhXOqKOcxgS-Fdz0'
+
+
+
+
+
+
+
+
+
+
 
 
 bot = telebot.AsyncTeleBot(token=TOKEN)
