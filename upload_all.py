@@ -11,11 +11,11 @@ import os
 socket.setdefaulttimeout(600)  # set timeout to 10 minutes
 SCOPES = ['https://www.googleapis.com/auth/drive']
 
-# # DEFAULT DIR >> BOT 1
-my_folder_id = '16m8_vJaE--4LludRLZNSVVP86j1XrAkT'
+# # # DEFAULT DIR >> BOT 1
+# my_folder_id = '16m8_vJaE--4LludRLZNSVVP86j1XrAkT'
 
-####BOT 2 DIR
-# my_folder_id ='1Sd-JId7NYoBBz0nBk59vU_GCrITWFdgK'
+###BOT 2 DIR
+my_folder_id ='1Sd-JId7NYoBBz0nBk59vU_GCrITWFdgK'
 
 
 

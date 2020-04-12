@@ -14,12 +14,12 @@ from slugify import slugify
 
 
 
-#### Pybot bot adv token BOT1
-TOKEN = "1161305170:AAHibSPAJOtk-7yi1FcA8WIlYDOGh5XC-e8"
+# #### Pybot bot adv token BOT1
+# TOKEN = "1161305170:AAHibSPAJOtk-7yi1FcA8WIlYDOGh5XC-e8"
 
 
-# ##### PYBOT 2 BOT 2
-# TOKEN = '1218272408:AAG5HBzOQKlpSmsrOBYlhXOqKOcxgS-Fdz0'
+##### PYBOT 2 BOT 2
+TOKEN = '1218272408:AAG5HBzOQKlpSmsrOBYlhXOqKOcxgS-Fdz0'
 
 
 
