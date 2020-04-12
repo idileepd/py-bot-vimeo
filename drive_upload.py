@@ -23,11 +23,20 @@ OUTPUT_DIR = '/'.join(OUTPUT_DIR.split('\\'))
 
 creds = None
 
-# DEFAULT DIR
-my_folder_id = '16m8_vJaE--4LludRLZNSVVP86j1XrAkT'
+# # DEFAULT DIR
+# my_folder_id = '16m8_vJaE--4LludRLZNSVVP86j1XrAkT'
 
-#BOT 2 DIR
-# my_folder_id ='1Sd-JId7NYoBBz0nBk59vU_GCrITWFdgK'
+####BOT 2 DIR
+my_folder_id ='1Sd-JId7NYoBBz0nBk59vU_GCrITWFdgK'
+
+
+
+
+
+
+
+
+
 
 print("\n\n\n\nExecuting Drive UPLOAD.py")
 print("Getting tokne.pickle")
