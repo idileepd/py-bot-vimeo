@@ -19,9 +19,10 @@ from slugify import slugify
 
 
 ##### PYBOT 2 BOT 2
-TOKEN = '1218272408:AAG5HBzOQKlpSmsrOBYlhXOqKOcxgS-Fdz0'
+# TOKEN = '1218272408:AAG5HBzOQKlpSmsrOBYlhXOqKOcxgS-Fdz0'
 
-
+######### BOT 3
+TOKEN = '1173421979:AAHhww7nVXk71vA1mLzCOCk9bkvvVIVQuG0'
 
 
 
