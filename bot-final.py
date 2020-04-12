@@ -32,12 +32,7 @@ dileep = 760135118
 venu = 642649878
 kamesh = 599072894
 allowed_grp = -1001413818920
-allowed_users_grp = [dileep, allowed_grp]
-
-
-default_dir = '16m8_vJaE--4LludRLZNSVVP86j1XrAkT'
-current_set_dir = '16m8_vJaE--4LludRLZNSVVP86j1XrAkT'
-
+allowed_users_grp = [dileep, allowed_grp, venu]
 
 
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
